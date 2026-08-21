@@ -6,19 +6,50 @@ import { MediaCard } from "@/components/media/media-card"
 import { Icon } from "@/components/shared/icon"
 import type { MediaItem } from "@/lib/tmdb/types"
 
+const TRANSITION_MS = 300
+
 export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClose: () => void }>) {
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<MediaItem[]>([])
   const [state, setState] = useState<"idle" | "loading" | "ready" | "error">("idle")
+  const [mounted, setMounted] = useState(open)
+  const [visible, setVisible] = useState(false)
   const input = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (!open) return
-    input.current?.focus()
+    let firstFrame = 0
+    let secondFrame = 0
+    const update = window.setTimeout(() => {
+      if (open) {
+        setMounted(true)
+        firstFrame = window.requestAnimationFrame(() => {
+          secondFrame = window.requestAnimationFrame(() => setVisible(true))
+        })
+      } else {
+        setVisible(false)
+      }
+    }, 0)
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const detach = open ? 0 : window.setTimeout(() => setMounted(false), reducedMotion ? 0 : TRANSITION_MS)
+
+    return () => {
+      window.clearTimeout(update)
+      if (detach) window.clearTimeout(detach)
+      if (firstFrame) window.cancelAnimationFrame(firstFrame)
+      if (secondFrame) window.cancelAnimationFrame(secondFrame)
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (open && mounted) input.current?.focus()
+  }, [mounted, open])
+
+  useEffect(() => {
+    if (!mounted) return
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
     return () => { document.body.style.overflow = previousOverflow }
-  }, [open])
+  }, [mounted])
 
   useEffect(() => {
     const trimmed = query.trim()
@@ -47,13 +78,14 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
     }
   }, [query])
 
-  if (!open) return null
+  if (!mounted) return null
 
   return (
     <div
       className={clsx(
         "fixed inset-0 z-50 flex justify-center",
         "px-3 pt-3 sm:px-8 sm:pt-8",
+        !visible && "pointer-events-none",
       )}
       role="dialog"
       aria-modal="true"
@@ -65,7 +97,8 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
         className={clsx(
           "absolute inset-0 cursor-default",
           "bg-background/82 backdrop-blur-xl",
-          "transition-opacity duration-250 ease-out starting:opacity-0 motion-reduce:transition-none",
+          "transition-opacity duration-250 ease-out motion-reduce:transition-none",
+          visible ? "opacity-100" : "opacity-0",
         )}
         aria-label="Close search"
         onClick={onClose}
@@ -75,7 +108,10 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
           "relative flex h-[calc(100vh-1.5rem)] w-full max-w-6xl flex-col overflow-hidden sm:h-[calc(100vh-4rem)] sm:rounded-2xl",
           "bg-background-secondary",
           "border border-border shadow-[0_30px_100px_rgba(0,0,0,.7)]",
-          "transition-[opacity,transform] duration-300 ease-[cubic-bezier(.22,1,.36,1)] starting:translate-y-3 starting:scale-[.985] starting:opacity-0 motion-reduce:transition-none",
+          "transition-[opacity,transform] duration-300 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none",
+          visible
+            ? "translate-y-0 scale-100 opacity-100"
+            : "translate-y-3 scale-[.985] opacity-0",
         )}
       >
         <div className={clsx(
