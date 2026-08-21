@@ -91,7 +91,7 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
           {state === "ready" && results.length > 0 && (
             <>
               <div className="mb-5 flex items-end justify-between gap-3"><h2 className="text-xl font-bold text-text-primary">Results for “{query.trim()}”</h2><span className="text-xs text-text-muted">{results.length} titles</span></div>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-4 lg:grid-cols-6">{results.map((media) => <MediaCard key={`${media.mediaType}-${media.id}`} media={media} />)}</div>
+              <div className={clsx("grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-4 lg:grid-cols-6")}>{results.map((media) => <MediaCard key={`${media.mediaType}-${media.id}`} media={media} onSelect={onClose} />)}</div>
             </>
           )}
         </div>

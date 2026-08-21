@@ -9,10 +9,12 @@ export function MediaCard({
   media,
   priority = false,
   showInfo = true,
+  onSelect,
 }: Readonly<{
   media: MediaItem;
   priority?: boolean;
   showInfo?: boolean;
+  onSelect?: () => void;
 }>) {
   const poster = tmdbImage.poster(media.posterPath);
 
@@ -20,6 +22,7 @@ export function MediaCard({
     <article className={clsx("group min-w-0")}>
       <Link
         href={`/${media.mediaType}/${media.id}`}
+        onClick={onSelect}
         className={clsx("block")}
       >
         <span
