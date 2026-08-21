@@ -1,0 +1,113 @@
+{
+  "Shell": {
+    "brandKicker": "Lazify",
+    "brandTitle": "anuflix",
+    "brandDescription": "Base scaffold for routing, translations, and global UI state in a Next.js admin app.",
+    "navigationLabel": "Primary navigation",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "links": {
+      "overview": "Overview",
+      "dashboard": "Dashboard",
+      "settings": "Settings"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "english": "English",
+    "khmer": "Khmer"
+  },
+  "ThemeToggle": {
+    "label": "Toggle color theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "HomePage": {
+    "eyebrow": "Created with Lazify",
+    "title": "Your project is already dressed for launch.",
+    "description": "This onboarding screen is generated to prove the starter is not empty: it carries your brand, your theme, and the first impression your users deserve.",
+    "showcase": {
+      "label": "Lazify workspace",
+      "title": "Production starter",
+      "status": "Ready"
+    },
+    "guides": {
+      "theme": {
+        "label": "Theme",
+        "steps": [
+          "Add the token to :root in globals.css",
+          "Give it a value in both light and dark blocks",
+          "Read it in components with var(--token)"
+        ]
+      },
+      "routes": {
+        "label": "Routes",
+        "steps": [
+          "Drop a page.tsx in src/app — the folder is the path",
+          "Add a matching NavLink in app-shell.tsx",
+          "Navigate with next/link or useRouter"
+        ]
+      },
+      "store": {
+        "label": "Store",
+        "steps": [
+          "Define an atom beside the store",
+          "The provider tree in layout.tsx already holds it",
+          "Read and write it with useAtom()"
+        ]
+      }
+    },
+    "stats": {
+      "themeModes": {
+        "value": "2",
+        "label": "Theme modes"
+      },
+      "brandReady": {
+        "value": "100%",
+        "label": "Brand ready"
+      },
+      "blankScreens": {
+        "value": "0",
+        "label": "Blank screens"
+      }
+    },
+    "footer": {
+      "title": "Start building",
+      "description": "Open src/app/page.tsx and replace this screen with your own."
+    }
+  },
+  "DashboardPage": {
+    "eyebrow": "Analytics",
+    "title": "Dashboard workspace",
+    "description": "Use this route as the first feature slice for metrics, charts, and operational summaries.",
+    "metrics": {
+      "revenue": {
+        "label": "Revenue pipeline",
+        "value": "$128,400"
+      },
+      "activeUsers": {
+        "label": "Active users",
+        "value": "8,241"
+      },
+      "conversion": {
+        "label": "Conversion",
+        "value": "14.2%"
+      }
+    }
+  },
+  "SettingsPage": {
+    "eyebrow": "Configuration",
+    "title": "Workspace settings",
+    "description": "Language switching and shared workspace preferences already have their wiring in place.",
+    "preferences": {
+      "language": {
+        "title": "Translation flow",
+        "description": "The locale switcher updates the react-i18next language and the persisted preference atom."
+      },
+      "workspace": {
+        "title": "Shared state",
+        "description": "Expand the atom layer with auth, filters, or UI preferences as the admin surface grows."
+      }
+    }
+  }
+}

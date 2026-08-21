@@ -1,0 +1,113 @@
+{
+  "Shell": {
+    "brandKicker": "Lazify",
+    "brandTitle": "anuflix",
+    "brandDescription": "គ្រោងមូលដ្ឋានសម្រាប់ routing, translation និង global UI state នៅក្នុង Next.js admin app។",
+    "navigationLabel": "មឺនុយសំខាន់",
+    "collapse": "បង្រួម sidebar",
+    "expand": "ពង្រីក sidebar",
+    "links": {
+      "overview": "ទិដ្ឋភាពទូទៅ",
+      "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+      "settings": "ការកំណត់"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "ភាសា",
+    "english": "អង់គ្លេស",
+    "khmer": "ខ្មែរ"
+  },
+  "ThemeToggle": {
+    "label": "ប្តូរពណ៌ផ្ទៃ",
+    "light": "ភ្លឺ",
+    "dark": "ងងឹត"
+  },
+  "HomePage": {
+    "eyebrow": "បង្កើតដោយ Lazify",
+    "title": "គម្រោងរបស់អ្នកបានរៀបចំរួចរាល់សម្រាប់ការចាប់ផ្តើម។",
+    "description": "អេក្រង់ណែនាំនេះត្រូវបានបង្កើតឡើងដើម្បីបញ្ជាក់ថា starter មិនទទេទេ៖ វាមានម៉ាករបស់អ្នក ពណ៌ផ្ទៃរបស់អ្នក និងចំណាប់អារម្មណ៍ដំបូងសម្រាប់អ្នកប្រើ។",
+    "showcase": {
+      "label": "Lazify workspace",
+      "title": "Production starter",
+      "status": "រួចរាល់"
+    },
+    "guides": {
+      "theme": {
+        "label": "ពណ៌ផ្ទៃ",
+        "steps": [
+          "បន្ថែម token ទៅក្នុង :root ក្នុង globals.css",
+          "កំណត់តម្លៃទាំង light និង dark",
+          "ប្រើវានៅក្នុង component ដោយ var(--token)"
+        ]
+      },
+      "routes": {
+        "label": "Routes",
+        "steps": [
+          "បន្ថែម page.tsx ក្នុង src/app — ឈ្មោះ folder ជា path",
+          "បន្ថែម NavLink ដែលត្រូវគ្នា ក្នុង app-shell.tsx",
+          "ប្តូរទំព័រដោយ next/link ឬ useRouter"
+        ]
+      },
+      "store": {
+        "label": "Store",
+        "steps": [
+          "កំណត់ atom នៅក្នុង store",
+          "Provider ក្នុង layout.tsx មានវារួចហើយ",
+          "អាន និងសរសេរវាដោយ useAtom()"
+        ]
+      }
+    },
+    "stats": {
+      "themeModes": {
+        "value": "2",
+        "label": "របៀបពណ៌ផ្ទៃ"
+      },
+      "brandReady": {
+        "value": "100%",
+        "label": "ម៉ាករួចរាល់"
+      },
+      "blankScreens": {
+        "value": "0",
+        "label": "អេក្រង់ទទេ"
+      }
+    },
+    "footer": {
+      "title": "ចាប់ផ្តើមបង្កើត",
+      "description": "បើក src/app/page.tsx ហើយជំនួសអេក្រង់នេះដោយផ្ទាំងរបស់អ្នក។"
+    }
+  },
+  "DashboardPage": {
+    "eyebrow": "វិភាគ",
+    "title": "ផ្ទាំង Dashboard",
+    "description": "ប្រើ route នេះសម្រាប់ metrics, charts និង operational summary របស់អ្នក។",
+    "metrics": {
+      "revenue": {
+        "label": "បំពង់ចំណូល",
+        "value": "$128,400"
+      },
+      "activeUsers": {
+        "label": "អ្នកប្រើសកម្ម",
+        "value": "8,241"
+      },
+      "conversion": {
+        "label": "អត្រាបម្លែង",
+        "value": "14.2%"
+      }
+    }
+  },
+  "SettingsPage": {
+    "eyebrow": "ការកំណត់",
+    "title": "ការកំណត់ workspace",
+    "description": "Language switching និង shared workspace preferences ត្រូវបានរៀបចំរួចជាស្រេច។",
+    "preferences": {
+      "language": {
+        "title": "Translation flow",
+        "description": "Locale switcher ប្តូរភាសា react-i18next និងរក្សាទុក preference atom ពេលតែមួយ។"
+      },
+      "workspace": {
+        "title": "Shared state",
+        "description": "អ្នកអាចបន្ថែម auth, filters ឬ UI preferences ទៅក្នុង atom layer នេះបាន។"
+      }
+    }
+  }
+}
