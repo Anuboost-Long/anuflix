@@ -28,7 +28,7 @@ export function MediaCard({
               fill
               sizes="(max-width: 640px) 42vw, (max-width: 1100px) 24vw, 15vw"
               priority={priority}
-              className="object-cover will-change-transform transition-[transform,filter] duration-[650ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06] group-hover:brightness-110"
+              className="object-cover will-change-transform transition-all duration-[650ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06] group-hover:brightness-110"
             />
           ) : (
             <span className="flex size-full items-center justify-center bg-[linear-gradient(145deg,#0d1628,#08101f)] text-text-muted">
