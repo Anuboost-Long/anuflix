@@ -1,102 +1,31 @@
-"use client"
+import { ContinueWatching } from "@/components/media/continue-watching"
+import { Hero } from "@/components/hero/hero"
+import { MediaRow } from "@/components/media/media-row"
+import { TopTenRow } from "@/components/media/top-ten-row"
+import { getHomeContent } from "@/lib/tmdb/queries"
 
-import { useState } from "react"
-import { useTranslation } from "react-i18next"
-import { cn } from "@/lib/utils"
+export const dynamic = "force-dynamic"
 
-const GUIDES = [
-  {
-    key: "theme",
-    file: "src/app/globals.css",
-    code: 'const { theme, toggleTheme } = useTheme()',
-    accent: '--accent: #047857'
-  },
-  {
-    key: "routes",
-    file: "src/app/dashboard/page.tsx",
-    code: 'import Link from "next/link"',
-    accent: '<Link href="/dashboard" />'
-  },
-  {
-    key: "store",
-    file: "src/store/app-store.ts",
-    code: "export const sidebarOpenAtom = atom(true)",
-    accent: "const [open, setOpen] = useAtom(sidebarOpenAtom)"
+export default async function HomePage() {
+  const content = await getHomeContent()
+  const featured = content.trending.find(({ backdropPath, overview }) => backdropPath && overview)
+
+  if (!featured) {
+    return <div className="flex min-h-[75vh] items-center justify-center px-6 text-center"><div><h1 className="text-3xl font-black text-text-primary">Nothing to feature yet</h1><p className="mt-2 text-text-secondary">Refresh in a moment to explore today’s lineup.</p></div></div>
   }
-] as const
-
-const STATS = ["themeModes", "brandReady", "blankScreens"] as const
-
-export default function HomePage() {
-  const { t } = useTranslation()
-  const [activeGuide, setActiveGuide] = useState(0)
-  const guide = GUIDES[activeGuide]
 
   return (
-    <section className="page">
-      <span className="page-eyebrow">{t("HomePage.eyebrow")}</span>
-      <h1 className="page-title">{t("HomePage.title")}</h1>
-      <p className="page-copy">{t("HomePage.description")}</p>
-
-      <div className="showcase">
-        <div className="showcase-head">
-          <div>
-            <p className="panel-label">{t("HomePage.showcase.label")}</p>
-            <p className="panel-title">{t("HomePage.showcase.title")}</p>
-          </div>
-          <span className="live-badge">
-            <span className="live-dot" />
-            {t("HomePage.showcase.status")}
-          </span>
-        </div>
-
-        <div className="pipeline" role="tablist" aria-label={t("HomePage.showcase.label")}>
-          {GUIDES.map((item, index) => (
-            <button
-              key={item.key}
-              type="button"
-              role="tab"
-              aria-selected={activeGuide === index}
-              onClick={() => setActiveGuide(index)}
-              className={cn("pipeline-step", activeGuide === index && "pipeline-step-active")}
-            >
-              <span className="pipeline-index">0{index + 1}</span>
-              <span className="pipeline-text">{t(`HomePage.guides.${item.key}.label`)}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="code-card">
-          <p className="code-muted">{guide.file}</p>
-
-          <ol className="guide-steps">
-            {[0, 1, 2].map((step) => (
-              <li key={step} className="guide-step">
-                {t(`HomePage.guides.${guide.key}.steps.${step}`)}
-              </li>
-            ))}
-          </ol>
-
-          <div className="guide-divider" />
-
-          <p className="code-line">{guide.code}</p>
-          <p className="code-line code-line-accent">{guide.accent}</p>
-        </div>
+    <>
+      <Hero media={featured} />
+      <div className="space-y-14 pb-14 sm:space-y-16">
+        <ContinueWatching />
+        <TopTenRow items={content.trending} />
+        <MediaRow title="Trending movies" eyebrow="Fresh momentum" items={content.trendingMovies} priority />
+        <MediaRow title="Popular movies" eyebrow="Crowd favorites" items={content.popularMovies} />
+        <MediaRow title="Popular series" eyebrow="Stories worth staying for" items={content.popularTv} />
+        <MediaRow title="Top rated films" eyebrow="Critically acclaimed" items={content.topRatedMovies} />
+        <MediaRow title="Binge-worthy TV" eyebrow="The highest rated" items={content.topRatedTv} />
       </div>
-
-      <div className="stats-grid">
-        {STATS.map((stat) => (
-          <article key={stat} className="stat-card">
-            <strong>{t(`HomePage.stats.${stat}.value`)}</strong>
-            <span>{t(`HomePage.stats.${stat}.label`)}</span>
-          </article>
-        ))}
-      </div>
-
-      <div className="footer-note">
-        <p className="footer-note-title">{t("HomePage.footer.title")}</p>
-        <p className="footer-note-text">{t("HomePage.footer.description")}</p>
-      </div>
-    </section>
+    </>
   )
 }

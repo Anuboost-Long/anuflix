@@ -1,25 +1,27 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
+import localFont from "next/font/local"
 import { AppShell } from "@/components/navigation/app-shell"
 import { I18nProvider } from "@/components/shared/i18n-provider"
 import "./globals.css"
 
+const geist = localFont({
+  src: "../../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
+  variable: "--font-geist",
+})
+
 export const metadata: Metadata = {
-  title: "anuflix",
-  description: "Admin starter scaffold with routing, translations, and global state."
+  title: {
+    default: "Anuflix — Find your next story",
+    template: "%s | Anuflix",
+  },
+  description: "Discover movies and TV shows, build your list, and continue watching across Anuflix.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("app-theme");if(t)document.documentElement.setAttribute("data-theme",t.replace(/"/g,""))}catch(e){}})()`
-          }}
-        />
-      </head>
-      <body>
+    <html lang="en">
+      <body className={geist.variable}>
         <I18nProvider>
           <AppShell>{children}</AppShell>
         </I18nProvider>
