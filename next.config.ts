@@ -8,30 +8,42 @@ const nextConfig: NextConfig = {
         hostname: "image.tmdb.org",
         port: "",
         pathname: "/t/p/**",
-        search: "",
+        search: ""
       },
       {
         protocol: "https",
         hostname: "streamed.pk",
         port: "",
         pathname: "/**",
-        search: "",
+        search: ""
       },
-    ],
+      {
+        protocol: "https",
+        hostname: "s4.anilist.co",
+        port: "",
+        pathname: "/**",
+        search: ""
+      }
+    ]
   },
   async headers() {
-    const scripts = process.env.NODE_ENV === "development"
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-      : "script-src 'self' 'unsafe-inline'"
+    const scripts =
+      process.env.NODE_ENV === "development"
+        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+        : "script-src 'self' 'unsafe-inline'";
 
-    return [{
-      source: "/(.*)",
-      headers: [{
-        key: "Content-Security-Policy",
-        value: `default-src 'self'; img-src 'self' data: https://image.tmdb.org https://streamed.pk; frame-src https://www.vidking.net https://embed.st; ${scripts}; style-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self' data:;`,
-      }],
-    }]
-  },
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: `default-src 'self'; img-src 'self' data: https://image.tmdb.org https://streamed.pk; frame-src https://player.videasy.to https://embed.st; ${scripts}; style-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self' data:;`
+          }
+        ]
+      }
+    ];
+  }
 };
 
 export default nextConfig;

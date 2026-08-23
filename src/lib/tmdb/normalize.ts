@@ -1,16 +1,15 @@
-import type { MediaItem, MediaType, TmdbMedia } from "@/lib/tmdb/types"
+import type { MediaItem, TmdbMedia, TmdbMediaType } from "@/lib/tmdb/types";
 
-export function normalizeMedia(item: TmdbMedia, fallbackType?: MediaType): MediaItem | null {
-  const mediaType = item.media_type === "movie" || item.media_type === "tv"
-    ? item.media_type
-    : fallbackType
-  const title = item.title ?? item.name
+export function normalizeMedia(item: TmdbMedia, fallbackType?: TmdbMediaType): MediaItem | null {
+  const mediaType =
+    item.media_type === "movie" || item.media_type === "tv" ? item.media_type : fallbackType;
+  const title = item.title ?? item.name;
 
   if (!mediaType || !title) {
-    return null
+    return null;
   }
 
-  const date = item.release_date ?? item.first_air_date
+  const date = item.release_date ?? item.first_air_date;
 
   return {
     id: item.id,
@@ -23,12 +22,12 @@ export function normalizeMedia(item: TmdbMedia, fallbackType?: MediaType): Media
     voteAverage: item.vote_average ?? 0,
     voteCount: item.vote_count ?? 0,
     genreIds: item.genre_ids ?? item.genres?.map(({ id }) => id) ?? [],
-    popularity: item.popularity,
-  }
+    popularity: item.popularity
+  };
 }
 
-export function normalizeList(items: TmdbMedia[], fallbackType?: MediaType) {
+export function normalizeList(items: TmdbMedia[], fallbackType?: TmdbMediaType) {
   return items
     .map((item) => normalizeMedia(item, fallbackType))
-    .filter((item): item is MediaItem => item !== null)
+    .filter((item): item is MediaItem => item !== null);
 }

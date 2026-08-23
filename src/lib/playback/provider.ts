@@ -1,1 +1,1 @@
-export { vidkingProvider as playbackProvider } from "@/lib/playback/providers/vidking"
+export { videasyProvider as playbackProvider } from "@/lib/playback/providers/videasy";

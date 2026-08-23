@@ -12,9 +12,10 @@ const links = [
   ["Home", "/"],
   ["Movies", "/movies"],
   ["TV Shows", "/tv"],
+  ["Anime", "/anime"],
   ["Live", "/live"],
   ["Discover", "/discover"],
-  ["My List", "/my-list"],
+  ["My List", "/my-list"]
 ] as const;
 
 export function Header() {
@@ -44,17 +45,16 @@ export function Header() {
     <>
       <header
         className={clsx(
-          "fixed inset-x-0 top-0 z-40 flex h-20 items-center gap-9",
+          "fixed inset-x-0 top-0 z-40 flex h-20 items-center gap-9 ",
           "bg-linear-to-b from-background/90 to-transparent",
           "px-[clamp(1.25rem,4vw,4.5rem)]",
-          "transition-[background-color,border-color,backdrop-filter] duration-200",
-          scrolled && "bg-background-secondary/88 backdrop-blur-xl",
-          scrolled && "border-b border-border",
+          "transition-[background-color,backdrop-filter] duration-200",
+          scrolled && "bg-background-secondary/88 backdrop-blur-xl"
         )}
       >
         <Brand />
         <nav
-          className={clsx("hidden items-center gap-7 md:flex")}
+          className={clsx("hidden items-center gap-5 md:flex xl:gap-7")}
           aria-label="Primary navigation"
         >
           {links.map(([label, href]) => (
@@ -67,7 +67,7 @@ export function Header() {
                 "py-2",
                 "transition-colors hover:text-white",
                 "after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:origin-center after:scale-x-0 after:bg-brand-bright after:transition-transform",
-                pathname === href && "text-white after:scale-x-100",
+                pathname === href && "text-white after:scale-x-100"
               )}
             >
               {label}
@@ -82,7 +82,7 @@ export function Header() {
             "border border-border",
             "text-sm text-text-secondary",
             "px-3.5",
-            "transition-colors hover:border-border-strong hover:bg-surface-hover hover:text-white",
+            "transition-colors hover:border-border-strong hover:bg-surface-hover hover:text-white"
           )}
           onClick={() => setSearchOpen(true)}
         >
@@ -93,7 +93,7 @@ export function Header() {
               "hidden rounded sm:inline",
               "border border-border",
               "text-[10px] text-text-muted",
-              "px-1.5 py-0.5",
+              "px-1.5 py-0.5"
             )}
           >
             /

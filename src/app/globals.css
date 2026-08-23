@@ -20,11 +20,22 @@
   --font-sans: var(--font-geist), sans-serif;
 }
 
+@utility hide-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
   html {
     min-height: 100%;
+    overflow-x: clip;
     background: #050914;
     color-scheme: dark;
     scroll-behavior: smooth;
@@ -33,23 +44,47 @@
   body {
     min-height: 100vh;
     margin: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
     background: #050914;
     color: #f8fafc;
     font-family: var(--font-geist), sans-serif;
   }
 
-  button, input, select { font: inherit; }
-  button, a, select { -webkit-tap-highlight-color: transparent; }
-  ::selection { background: rgba(37, 99, 235, 0.5); color: #f8fafc; }
-  :focus-visible { outline: 2px solid #60a5fa; outline-offset: 3px; }
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: #050914; }
-  ::-webkit-scrollbar-thumb { border-radius: 999px; background: #17233a; }
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+  button,
+  a,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection {
+    background: rgba(37, 99, 235, 0.5);
+    color: #f8fafc;
+  }
+  :focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 3px;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050914;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #17233a;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
