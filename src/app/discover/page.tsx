@@ -1,5 +1,7 @@
 import { MediaGrid } from "@/components/media/media-grid";
 import { SelectInput } from "@/components/shared/select-input";
+import { translation } from "@/constants/translation";
+import { getServerTranslation } from "@/i18n/server";
 import { discoverMedia, getGenres } from "@/lib/tmdb/queries";
 import type { TmdbMediaType } from "@/lib/tmdb/types";
 import clsx from "clsx";
@@ -18,6 +20,7 @@ export default async function DiscoverPage({
 	}>;
 }>) {
 	const filters = await searchParams;
+	const t = await getServerTranslation();
 	const mediaType: TmdbMediaType = filters.type === "tv" ? "tv" : "movie";
 	const [genres, items] = await Promise.all([
 		getGenres(mediaType),
@@ -33,34 +36,34 @@ export default async function DiscoverPage({
 	return (
 		<div className="px-[clamp(1.25rem,4vw,4.5rem)] pb-20 pt-28">
 			<span className="text-xs font-semibold tracking-[.18em] text-brand-light uppercase">
-				Find your next watch
+				{t(translation.DiscoverPage.Eyebrow)}
 			</span>
 			<h1 className="mt-2 text-4xl font-black tracking-[-.04em] text-text-primary sm:text-6xl">
-				Discover
+				{t(translation.DiscoverPage.Title)}
 			</h1>
 			<form className="my-8 flex flex-wrap items-end gap-3 border-y border-border py-5">
 				<div className="grid gap-2 text-xs font-semibold text-text-secondary">
-					<span>Type</span>
+					<span>{t(translation.DiscoverPage.Type)}</span>
 					<SelectInput
-						ariaLabel="Type"
+						ariaLabel={t(translation.DiscoverPage.Type)}
 						name="type"
 						defaultValue={mediaType}
 						options={[
-							{ value: "movie", label: "Movies" },
-							{ value: "tv", label: "TV shows" },
+							{ value: "movie", label: t(translation.Navigation.Movies) },
+							{ value: "tv", label: t(translation.Navigation.TvShows) },
 						]}
 						size="medium"
 						className="w-32"
 					/>
 				</div>
 				<div className="grid gap-2 text-xs font-semibold text-text-secondary">
-					<span>Genre</span>
+					<span>{t(translation.DiscoverPage.Genre)}</span>
 					<SelectInput
-						ariaLabel="Genre"
+						ariaLabel={t(translation.DiscoverPage.Genre)}
 						name="genre"
 						defaultValue={filters.genre ?? ""}
 						options={[
-							{ value: "", label: "All genres" },
+							{ value: "", label: t(translation.DiscoverPage.AllGenres) },
 							...genres.map((genre) => ({ value: String(genre.id), label: genre.name })),
 						]}
 						size="medium"
@@ -68,25 +71,25 @@ export default async function DiscoverPage({
 					/>
 				</div>
 				<label className="grid gap-2 text-xs font-semibold text-text-secondary">
-					Year
+					{t(translation.DiscoverPage.Year)}
 					<input
 						name="year"
 						type="number"
 						min="1900"
 						max="2030"
 						defaultValue={filters.year}
-						placeholder="Any year"
+						placeholder={t(translation.DiscoverPage.AnyYear)}
 						className="h-11 w-28 rounded-lg border border-border bg-surface px-3 text-sm text-text-primary outline-none placeholder:text-text-subtle focus:border-brand-bright"
 					/>
 				</label>
 				<div className="grid gap-2 text-xs font-semibold text-text-secondary">
-					<span>Rating</span>
+					<span>{t(translation.DiscoverPage.Rating)}</span>
 					<SelectInput
-						ariaLabel="Rating"
+						ariaLabel={t(translation.DiscoverPage.Rating)}
 						name="rating"
 						defaultValue={filters.rating ?? ""}
 						options={[
-							{ value: "", label: "Any rating" },
+							{ value: "", label: t(translation.DiscoverPage.AnyRating) },
 							{ value: "6", label: "6+" },
 							{ value: "7", label: "7+" },
 							{ value: "8", label: "8+" },
@@ -96,17 +99,17 @@ export default async function DiscoverPage({
 					/>
 				</div>
 				<div className="grid gap-2 text-xs font-semibold text-text-secondary">
-					<span>Sort</span>
+					<span>{t(translation.DiscoverPage.Sort)}</span>
 					<SelectInput
-						ariaLabel="Sort"
+						ariaLabel={t(translation.DiscoverPage.Sort)}
 						name="sort"
 						defaultValue={filters.sort ?? "popularity.desc"}
 						options={[
-							{ value: "popularity.desc", label: "Most popular" },
-							{ value: "vote_average.desc", label: "Highest rated" },
+							{ value: "popularity.desc", label: t(translation.DiscoverPage.MostPopular) },
+							{ value: "vote_average.desc", label: t(translation.DiscoverPage.HighestRated) },
 							{
 								value: mediaType === "movie" ? "primary_release_date.desc" : "first_air_date.desc",
-								label: "Newest",
+								label: t(translation.DiscoverPage.Newest),
 							},
 						]}
 						size="medium"
@@ -119,20 +122,27 @@ export default async function DiscoverPage({
 						"transition-colors hover:bg-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-light",
 					)}
 				>
-					Apply filters
+					{t(translation.DiscoverPage.ApplyFilters)}
 				</button>
 			</form>
 			<div className="mb-6 flex items-end justify-between">
 				<div>
 					<span className="text-[11px] tracking-[.16em] text-text-muted uppercase">
-						Curated from TMDB
+						{t(translation.DiscoverPage.Curated)}
 					</span>
 					<h2 className="mt-1 text-2xl font-bold text-text-primary">
-						{genres.find(({ id }) => String(id) === filters.genre)?.name ?? "Popular"}{" "}
-						{mediaType === "movie" ? "movies" : "series"}
+						{t(translation.DiscoverPage.Results, {
+							name:
+								genres.find(({ id }) => String(id) === filters.genre)?.name ??
+								t(translation.DiscoverPage.Popular),
+							type:
+								mediaType === "movie" ? t(translation.Navigation.Movies) : t(translation.Common.Series),
+						})}
 					</h2>
 				</div>
-				<span className="text-xs text-text-muted">{items.length} titles</span>
+				<span className="text-xs text-text-muted">
+					{t(translation.Common.Titles, { count: items.length })}
+				</span>
 			</div>
 			<MediaGrid items={items} />
 		</div>

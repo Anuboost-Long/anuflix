@@ -1,5 +1,7 @@
 import { MediaDetails } from "@/components/details/media-details";
 import { BackButton } from "@/components/navigation/back-button";
+import { translation } from "@/constants/translation";
+import { getServerTranslation } from "@/i18n/server";
 import { getEpisodePage, getMediaDetails } from "@/lib/tmdb/queries";
 import clsx from "clsx";
 import type { Metadata } from "next";
@@ -26,6 +28,7 @@ export default async function TvDetailsPage({
 	searchParams: Promise<{ season?: string; page?: string }>;
 }>) {
 	const id = Number((await params).id);
+	const t = await getServerTranslation();
 	if (!Number.isInteger(id)) notFound();
 	const { media, raw, recommendations } = await getMediaDetails("tv", id);
 	if (!media) notFound();
@@ -47,7 +50,7 @@ export default async function TvDetailsPage({
 	return (
 		<div className={clsx("relative")}>
 			<div className={clsx("absolute top-24 left-[clamp(1.25rem,4vw,4.5rem)] z-30")}>
-				<BackButton fallbackHref="/tv" label="Back" />
+				<BackButton fallbackHref="/tv" label={t(translation.Common.Back)} />
 			</div>
 			<MediaDetails
 				media={media}

@@ -1,20 +1,23 @@
 "use client";
 
 import { Icon, type IconName } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 const links: Array<[string, string, IconName]> = [
-	["Home", "/", "home"],
-	["Movies", "/movies", "film"],
-	["TV", "/tv", "tv"],
-	["Anime", "/anime", "spark"],
-	["Live", "/live", "radio"],
-	["My List", "/my-list", "bookmark"],
+	[translation.Navigation.Home, "/", "home"],
+	[translation.Navigation.Movies, "/movies", "film"],
+	[translation.Navigation.Tv, "/tv", "tv"],
+	[translation.Navigation.Anime, "/anime", "spark"],
+	[translation.Navigation.Live, "/live", "radio"],
+	[translation.Navigation.MyList, "/my-list", "bookmark"],
 ];
 
 export function MobileNav() {
+	const { t } = useTranslation();
 	const pathname = usePathname();
 	return (
 		<nav
@@ -24,7 +27,7 @@ export function MobileNav() {
 				"border-t border-border",
 				"px-2 pb-[env(safe-area-inset-bottom)]",
 			)}
-			aria-label="Mobile navigation"
+			aria-label={t(translation.Navigation.Mobile)}
 		>
 			{links.map(([label, href, icon]) => (
 				<Link
@@ -38,7 +41,7 @@ export function MobileNav() {
 					)}
 				>
 					<Icon name={icon} className={clsx("size-[18px] shrink-0")} />
-					<span className="whitespace-nowrap">{label}</span>
+					<span className="whitespace-nowrap">{t(label)}</span>
 				</Link>
 			))}
 		</nav>

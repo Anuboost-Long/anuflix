@@ -1,6 +1,7 @@
 "use client";
 
 import { Icon } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import { watchPath } from "@/lib/playback/routes";
 import { progressStorage, type WatchProgress } from "@/lib/progress/storage";
 import { tmdbImage } from "@/lib/tmdb/images";
@@ -8,9 +9,11 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function ContinueWatching() {
 	const [items, setItems] = useState<WatchProgress[]>([]);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		const load = () => setItems(progressStorage.getActive());
@@ -25,13 +28,13 @@ export function ContinueWatching() {
 		<section className={clsx("min-w-0 max-w-full overflow-hidden")} aria-labelledby="continue-title">
 			<div className="mb-5 px-[clamp(1.25rem,4vw,4.5rem)]">
 				<span className="text-[10px] font-semibold tracking-[.16em] text-brand-light uppercase">
-					Pick up where you left off
+					{t(translation.Catalog.ContinueEyebrow)}
 				</span>
 				<h2
 					id="continue-title"
 					className="mt-1 text-xl font-bold tracking-[-.02em] text-text-primary sm:text-2xl"
 				>
-					Continue watching
+					{t(translation.Catalog.ContinueTitle)}
 				</h2>
 			</div>
 			<div
@@ -83,15 +86,15 @@ export function ContinueWatching() {
 								</strong>
 								<span className="mt-1 block text-xs text-text-muted">
 									{item.media.mediaType === "tv"
-										? `S${item.season} E${item.episode}`
+										? `${t(translation.Common.Season, { number: item.season })} · ${t(translation.Common.Episode, { number: item.episode })}`
 										: item.media.mediaType === "anime" && item.media.animeFormat !== "movie"
-											? `Episode ${item.episode}`
-											: `${Math.round(item.percentage)}% watched`}
+											? t(translation.Common.Episode, { number: item.episode })
+											: t(translation.Catalog.Watched, { count: Math.round(item.percentage) })}
 								</span>
 							</Link>
 							<Link
 								href={`/${item.media.mediaType}/${item.media.id}`}
-								aria-label={`View details for ${item.media.title}`}
+								aria-label={t(translation.Catalog.ViewDetails, { title: item.media.title })}
 								className={clsx(
 									"absolute top-2.5 right-2.5 z-10 grid size-8 place-items-center rounded-full after:absolute after:-inset-1.5",
 									"border border-white/10 bg-black/35 text-white/70 backdrop-blur-sm",

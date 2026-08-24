@@ -1,8 +1,13 @@
+"use client";
+
+import { translation } from "@/constants/translation";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export function Brand() {
+	const { t } = useTranslation();
 	return (
 		<Link
 			href="/"
@@ -10,7 +15,7 @@ export function Brand() {
 				"inline-flex items-center gap-2.5",
 				"text-lg font-black tracking-[.08em] text-text-primary",
 			)}
-			aria-label="Anuflix home"
+			aria-label={t(translation.Shell.BrandHome)}
 		>
 			<Image
 				src="/brand/logo-bgless.png"

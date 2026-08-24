@@ -1,113 +1,342 @@
 {
-  "Shell": {
-    "brandKicker": "Lazify",
-    "brandTitle": "anuflix",
-    "brandDescription": "គ្រោងមូលដ្ឋានសម្រាប់ routing, translation និង global UI state នៅក្នុង Next.js admin app។",
-    "navigationLabel": "មឺនុយសំខាន់",
-    "collapse": "បង្រួម sidebar",
-    "expand": "ពង្រីក sidebar",
-    "links": {
-      "overview": "ទិដ្ឋភាពទូទៅ",
-      "dashboard": "ផ្ទាំងគ្រប់គ្រង",
-      "settings": "ការកំណត់"
-    }
-  },
-  "LocaleSwitcher": {
-    "label": "ភាសា",
-    "english": "អង់គ្លេស",
-    "khmer": "ខ្មែរ"
-  },
-  "ThemeToggle": {
-    "label": "ប្តូរពណ៌ផ្ទៃ",
-    "light": "ភ្លឺ",
-    "dark": "ងងឹត"
-  },
-  "HomePage": {
-    "eyebrow": "បង្កើតដោយ Lazify",
-    "title": "គម្រោងរបស់អ្នកបានរៀបចំរួចរាល់សម្រាប់ការចាប់ផ្តើម។",
-    "description": "អេក្រង់ណែនាំនេះត្រូវបានបង្កើតឡើងដើម្បីបញ្ជាក់ថា starter មិនទទេទេ៖ វាមានម៉ាករបស់អ្នក ពណ៌ផ្ទៃរបស់អ្នក និងចំណាប់អារម្មណ៍ដំបូងសម្រាប់អ្នកប្រើ។",
-    "showcase": {
-      "label": "Lazify workspace",
-      "title": "Production starter",
-      "status": "រួចរាល់"
-    },
-    "guides": {
-      "theme": {
-        "label": "ពណ៌ផ្ទៃ",
-        "steps": [
-          "បន្ថែម token ទៅក្នុង :root ក្នុង globals.css",
-          "កំណត់តម្លៃទាំង light និង dark",
-          "ប្រើវានៅក្នុង component ដោយ var(--token)"
-        ]
-      },
-      "routes": {
-        "label": "Routes",
-        "steps": [
-          "បន្ថែម page.tsx ក្នុង src/app — ឈ្មោះ folder ជា path",
-          "បន្ថែម NavLink ដែលត្រូវគ្នា ក្នុង app-shell.tsx",
-          "ប្តូរទំព័រដោយ next/link ឬ useRouter"
-        ]
-      },
-      "store": {
-        "label": "Store",
-        "steps": [
-          "កំណត់ atom នៅក្នុង store",
-          "Provider ក្នុង layout.tsx មានវារួចហើយ",
-          "អាន និងសរសេរវាដោយ useAtom()"
-        ]
-      }
-    },
-    "stats": {
-      "themeModes": {
-        "value": "2",
-        "label": "របៀបពណ៌ផ្ទៃ"
-      },
-      "brandReady": {
-        "value": "100%",
-        "label": "ម៉ាករួចរាល់"
-      },
-      "blankScreens": {
-        "value": "0",
-        "label": "អេក្រង់ទទេ"
-      }
-    },
-    "footer": {
-      "title": "ចាប់ផ្តើមបង្កើត",
-      "description": "បើក src/app/page.tsx ហើយជំនួសអេក្រង់នេះដោយផ្ទាំងរបស់អ្នក។"
-    }
-  },
-  "DashboardPage": {
-    "eyebrow": "វិភាគ",
-    "title": "ផ្ទាំង Dashboard",
-    "description": "ប្រើ route នេះសម្រាប់ metrics, charts និង operational summary របស់អ្នក។",
-    "metrics": {
-      "revenue": {
-        "label": "បំពង់ចំណូល",
-        "value": "$128,400"
-      },
-      "activeUsers": {
-        "label": "អ្នកប្រើសកម្ម",
-        "value": "8,241"
-      },
-      "conversion": {
-        "label": "អត្រាបម្លែង",
-        "value": "14.2%"
-      }
-    }
-  },
-  "SettingsPage": {
-    "eyebrow": "ការកំណត់",
-    "title": "ការកំណត់ workspace",
-    "description": "Language switching និង shared workspace preferences ត្រូវបានរៀបចំរួចជាស្រេច។",
-    "preferences": {
-      "language": {
-        "title": "Translation flow",
-        "description": "Locale switcher ប្តូរភាសា react-i18next និងរក្សាទុក preference atom ពេលតែមួយ។"
-      },
-      "workspace": {
-        "title": "Shared state",
-        "description": "អ្នកអាចបន្ថែម auth, filters ឬ UI preferences ទៅក្នុង atom layer នេះបាន។"
-      }
-    }
-  }
+	"Shell": {
+		"brandKicker": "Lazify",
+		"brandTitle": "anuflix",
+		"brandDescription": "គ្រោងមូលដ្ឋានសម្រាប់ routing, translation និង global UI state នៅក្នុង Next.js admin app។",
+		"navigationLabel": "មឺនុយសំខាន់",
+		"brandHome": "ទំព័រដើម Anuflix",
+		"collapse": "បង្រួម sidebar",
+		"expand": "ពង្រីក sidebar",
+		"links": {
+			"overview": "ទិដ្ឋភាពទូទៅ",
+			"dashboard": "ផ្ទាំងគ្រប់គ្រង",
+			"settings": "ការកំណត់"
+		}
+	},
+	"Metadata": {
+		"defaultTitle": "Anuflix — ស្វែងរករឿងបន្ទាប់របស់អ្នក",
+		"description": "ស្វែងរកភាពយន្ត និងរឿងភាគ បង្កើតបញ្ជីរបស់អ្នក និងបន្តការទស្សនានៅលើ Anuflix។",
+		"animeTitle": "អានីមេ",
+		"animeDescription": "ស្វែងរករឿងអានីមេ និងភាពយន្តអានីមេនៅលើ Anuflix។",
+		"liveTitle": "កីឡាផ្សាយផ្ទាល់",
+		"liveDescription": "មើលការប្រកួតកីឡាកំពុងផ្សាយ និងជិតមកដល់នៅលើ Anuflix។",
+		"matchTitle": "{{title}} ផ្សាយផ្ទាល់",
+		"matchDescription": "មើល {{title}} ផ្សាយផ្ទាល់នៅលើ Anuflix។"
+	},
+	"LocaleSwitcher": {
+		"label": "ភាសា",
+		"english": "អង់គ្លេស",
+		"englishHint": "ប្រើភាសាអង់គ្លេស",
+		"khmer": "ខ្មែរ",
+		"khmerHint": "ប្រើភាសាខ្មែរ"
+	},
+	"Navigation": {
+		"primary": "មឺនុយសំខាន់",
+		"mobile": "មឺនុយទូរសព្ទ",
+		"home": "ទំព័រដើម",
+		"browse": "រុករក",
+		"catalog": "បណ្ណាល័យ",
+		"explore": "ស្វែងរក",
+		"personal": "ផ្ទាល់ខ្លួន",
+		"movies": "ភាពយន្ត",
+		"tv": "ទូរទស្សន៍",
+		"tvShows": "រឿងភាគទូរទស្សន៍",
+		"anime": "អានីមេ",
+		"live": "ផ្សាយផ្ទាល់",
+		"liveSports": "កីឡាផ្សាយផ្ទាល់",
+		"discover": "ស្វែងរក",
+		"discoverHint": "ស្វែងរកអ្វីថ្មី",
+		"myList": "បញ្ជីរបស់ខ្ញុំ",
+		"settings": "ការកំណត់",
+		"search": "ស្វែងរក",
+		"searchLive": "ស្វែងរកការផ្សាយផ្ទាល់"
+	},
+	"Footer": {
+		"navigation": "មឺនុយខាងក្រោម",
+		"description": "រុករកភាពយន្ត និងរឿងភាគ។ ការចាក់ផ្សាយអាចខុសគ្នាតាមចំណងជើង និងតំបន់។",
+		"disclaimer": "ផលិតផលនេះប្រើ TMDB API ប៉ុន្តែមិនត្រូវបានគាំទ្រ ឬបញ្ជាក់ដោយ TMDB ទេ។"
+	},
+	"Search": {
+		"label": "ស្វែងរកក្នុង Anuflix",
+		"close": "បិទការស្វែងរក",
+		"placeholder": "ស្វែងរកភាពយន្ត និងរឿងភាគ...",
+		"clear": "សម្អាត",
+		"hint": "វាយយ៉ាងហោចណាស់ ២ តួអក្សរ ដើម្បីស្វែងរកភាពយន្ត និងរឿងភាគ។",
+		"searching": "កំពុងស្វែងរក",
+		"unavailableTitle": "មិនអាចស្វែងរកបាន",
+		"unavailableDescription": "ពិនិត្យការតភ្ជាប់របស់អ្នក រួចសាកល្បងម្តងទៀត។",
+		"emptyTitle": "រកមិនឃើញចំណងជើង",
+		"emptyDescription": "សាកល្បងចំណងជើង តារាសម្តែង ឬពាក្យគន្លឹះផ្សេង។"
+	},
+	"HomePage": {
+		"eyebrow": "បង្កើតដោយ Lazify",
+		"title": "គម្រោងរបស់អ្នកបានរៀបចំរួចរាល់សម្រាប់ការចាប់ផ្តើម។",
+		"description": "អេក្រង់ណែនាំនេះត្រូវបានបង្កើតឡើងដើម្បីបញ្ជាក់ថា starter មិនទទេទេ៖ វាមានម៉ាករបស់អ្នក ពណ៌ផ្ទៃរបស់អ្នក និងចំណាប់អារម្មណ៍ដំបូងសម្រាប់អ្នកប្រើ។",
+		"showcase": {
+			"label": "Lazify workspace",
+			"title": "Production starter",
+			"status": "រួចរាល់"
+		},
+		"guides": {
+			"theme": {
+				"label": "ពណ៌ផ្ទៃ",
+				"steps": [
+					"បន្ថែម token ទៅក្នុង :root ក្នុង globals.css",
+					"កំណត់តម្លៃទាំង light និង dark",
+					"ប្រើវានៅក្នុង component ដោយ var(--token)"
+				]
+			},
+			"routes": {
+				"label": "Routes",
+				"steps": [
+					"បន្ថែម page.tsx ក្នុង src/app — ឈ្មោះ folder ជា path",
+					"បន្ថែម NavLink ដែលត្រូវគ្នា ក្នុង app-shell.tsx",
+					"ប្តូរទំព័រដោយ next/link ឬ useRouter"
+				]
+			},
+			"store": {
+				"label": "Store",
+				"steps": [
+					"កំណត់ atom នៅក្នុង store",
+					"Provider ក្នុង layout.tsx មានវារួចហើយ",
+					"អាន និងសរសេរវាដោយ useAtom()"
+				]
+			}
+		},
+		"stats": {
+			"themeModes": {
+				"value": "2",
+				"label": "របៀបពណ៌ផ្ទៃ"
+			},
+			"brandReady": {
+				"value": "100%",
+				"label": "ម៉ាករួចរាល់"
+			},
+			"blankScreens": {
+				"value": "0",
+				"label": "អេក្រង់ទទេ"
+			}
+		},
+		"footer": {
+			"title": "ចាប់ផ្តើមបង្កើត",
+			"description": "បើក src/app/page.tsx ហើយជំនួសអេក្រង់នេះដោយផ្ទាំងរបស់អ្នក។"
+		}
+	},
+	"DashboardPage": {
+		"eyebrow": "វិភាគ",
+		"title": "ផ្ទាំង Dashboard",
+		"description": "ប្រើ route នេះសម្រាប់ metrics, charts និង operational summary របស់អ្នក។",
+		"metrics": {
+			"revenue": {
+				"label": "បំពង់ចំណូល",
+				"value": "$128,400"
+			},
+			"activeUsers": {
+				"label": "អ្នកប្រើសកម្ម",
+				"value": "8,241"
+			},
+			"conversion": {
+				"label": "អត្រាបម្លែង",
+				"value": "14.2%"
+			}
+		}
+	},
+	"SettingsPage": {
+		"eyebrow": "ចំណូលចិត្ត",
+		"title": "ការកំណត់",
+		"description": "ជ្រើសរើសភាសាសម្រាប់មឺនុយ និងប៊ូតុងរួមរបស់ Anuflix។",
+		"savedOnDevice": "ចំណូលចិត្តរបស់អ្នកត្រូវបានរក្សាទុកនៅលើឧបករណ៍នេះ។",
+		"preferences": {
+			"language": {
+				"title": "ភាសា",
+				"description": "ជ្រើសរើសភាសាសម្រាប់មឺនុយ និងប៊ូតុងបញ្ជា។"
+			},
+			"workspace": {
+				"title": "Shared state",
+				"description": "អ្នកអាចបន្ថែម auth, filters ឬ UI preferences ទៅក្នុង atom layer នេះបាន។"
+			}
+		}
+	},
+	"Common": {
+		"back": "ថយក្រោយ",
+		"backToDetails": "ត្រឡប់ទៅព័ត៌មានលម្អិត",
+		"backToEpisodes": "ត្រឡប់ទៅភាគ",
+		"film": "ភាពយន្ត",
+		"movie": "ភាពយន្ត",
+		"series": "រឿងភាគ",
+		"anime": "អានីមេ",
+		"new": "ថ្មី",
+		"live": "ផ្សាយផ្ទាល់",
+		"playNow": "ចាក់ឥឡូវនេះ",
+		"myList": "បញ្ជីរបស់ខ្ញុំ",
+		"inMyList": "មានក្នុងបញ្ជីរបស់ខ្ញុំ",
+		"season": "រដូវកាលទី {{number}}",
+		"seasons": "{{count}} រដូវកាល",
+		"episode": "ភាគទី {{number}}",
+		"episodes": "ភាគ",
+		"episodeCount": "{{count}} ភាគ",
+		"minutes": "{{count}} នាទី",
+		"previous": "មុន",
+		"next": "បន្ទាប់",
+		"pageOf": "ទំព័រ {{page}} នៃ {{total}}",
+		"titles": "{{count}} ចំណងជើង"
+	},
+	"Catalog": {
+		"emptyTitle": "រកមិនឃើញចំណងជើង",
+		"emptyDescription": "សាកល្បងប្តូរតម្រងមួយ ឬច្រើន។",
+		"myListEmptyTitle": "បញ្ជីរបស់អ្នករង់ចាំចំណងជើងដំបូង",
+		"myListEmptyDescription": "ចុច បញ្ជីរបស់ខ្ញុំ លើភាពយន្ត ឬរឿងភាគ ដើម្បីរក្សាទុកនៅទីនេះ។",
+		"addToList": "បន្ថែម {{title}} ទៅបញ្ជីរបស់ខ្ញុំ",
+		"removeFromList": "ដក {{title}} ចេញពីបញ្ជីរបស់ខ្ញុំ",
+		"viewDetails": "មើលព័ត៌មានលម្អិតអំពី {{title}}",
+		"continueEyebrow": "បន្តពីកន្លែងដែលអ្នកបានឈប់",
+		"continueTitle": "បន្តការទស្សនា",
+		"watched": "បានមើល {{count}}%",
+		"topTenEyebrow": "អ្វីដែលគ្រប់គ្នាកំពុងមើល",
+		"topTenTitle": "កំពូល ១០ ថ្ងៃនេះ",
+		"scrollLeft": "រំកិល {{title}} ទៅឆ្វេង",
+		"scrollRight": "រំកិល {{title}} ទៅស្តាំ",
+		"poster": "រូបភាព {{title}}"
+	},
+	"Hero": {
+		"featuredToday": "ណែនាំថ្ងៃនេះ",
+		"moreInformation": "ព័ត៌មានបន្ថែមអំពី {{title}}",
+		"recommendations": "ចំណងជើងដែលបានណែនាំ",
+		"showSlide": "បង្ហាញ {{title}}"
+	},
+	"Home": {
+		"emptyTitle": "មិនទាន់មានអ្វីសម្រាប់ណែនាំ",
+		"emptyDescription": "សូមផ្ទុកឡើងវិញបន្តិចទៀត ដើម្បីមើលកម្មវិធីថ្ងៃនេះ។",
+		"trendingMovies": "ភាពយន្តកំពុងពេញនិយម",
+		"freshMomentum": "កំពុងទទួលការចាប់អារម្មណ៍",
+		"popularMovies": "ភាពយន្តពេញនិយម",
+		"crowdFavorites": "ជម្រើសអ្នកទស្សនា",
+		"popularSeries": "រឿងភាគពេញនិយម",
+		"storiesWorthStayingFor": "រឿងដែលគួរតាមដាន",
+		"topRatedFilms": "ភាពយន្តពិន្ទុខ្ពស់",
+		"criticallyAcclaimed": "ទទួលស្គាល់ដោយអ្នកវិភាគ",
+		"bingeWorthyTv": "រឿងភាគគួរមើលបន្ត",
+		"highestRated": "ពិន្ទុខ្ពស់បំផុត"
+	},
+	"AnimePage": {
+		"spotlight": "អានីមេណែនាំ",
+		"popularSeries": "រឿងអានីមេពេញនិយម",
+		"mostWatched": "មានអ្នកមើលច្រើនបំផុត",
+		"topRated": "អានីមេពិន្ទុខ្ពស់",
+		"audienceAcclaimed": "ទទួលស្គាល់ដោយអ្នកទស្សនា",
+		"newReleases": "អានីមេទើបចេញថ្មី",
+		"freshArrivals": "មកដល់ថ្មីៗ",
+		"mature": "អានីមេសម្រាប់មនុស្សពេញវ័យ"
+	},
+	"MoviesPage": {
+		"eyebrow": "អេក្រង់ធំនៅផ្ទះ",
+		"description": "ភាពយន្តទើបចេញថ្មី ជម្រើសពេញនិយម និងរឿងដែលគ្រប់គ្នាកំពុងនិយាយដល់។",
+		"popularNow": "កំពុងពេញនិយម",
+		"nowPlaying": "កំពុងចាក់បញ្ចាំង",
+		"topRated": "ពិន្ទុខ្ពស់",
+		"comingSoon": "មកដល់ឆាប់ៗ"
+	},
+	"TvPage": {
+		"eyebrow": "រឿងដែលនៅជាប់ចិត្ត",
+		"description": "ស្វែងរករឿងចាស់ដែលអ្នកចូលចិត្ត រឿងថ្មីជក់ចិត្ត និងរឿងភាគដែលគេនិយាយច្រើនថ្ងៃនេះ។",
+		"popularSeries": "រឿងភាគពេញនិយម",
+		"onTheAir": "កំពុងចាក់ផ្សាយ",
+		"airingToday": "ចាក់ផ្សាយថ្ងៃនេះ",
+		"topRated": "ពិន្ទុខ្ពស់"
+	},
+	"MyListPage": {
+		"eyebrow": "រក្សាទុកសម្រាប់ពេលក្រោយ",
+		"description": "ធ្នើផ្ទាល់ខ្លួនសម្រាប់ភាពយន្ត និងរឿងភាគដែលអ្នកចង់ត្រឡប់មកមើល។"
+	},
+	"SearchPage": {
+		"eyebrow": "ភាពយន្ត និងរឿងភាគ",
+		"button": "ស្វែងរក",
+		"prompt": "បញ្ចូលយ៉ាងហោចណាស់ ២ តួអក្សរ ដើម្បីស្វែងរកចំណងជើង។"
+	},
+	"DiscoverPage": {
+		"eyebrow": "ស្វែងរករឿងបន្ទាប់របស់អ្នក",
+		"title": "ស្វែងរក",
+		"description": "ជ្រើសរើសប្រភេទ ចំណាត់ថ្នាក់ ឆ្នាំ ពិន្ទុ និងលំដាប់លទ្ធផលដែលអ្នកចង់បាន។",
+		"type": "ប្រភេទ",
+		"genre": "ចំណាត់ថ្នាក់",
+		"year": "ឆ្នាំ",
+		"rating": "ពិន្ទុ",
+		"sort": "តម្រៀប",
+		"allGenres": "គ្រប់ចំណាត់ថ្នាក់",
+		"anyYear": "គ្រប់ឆ្នាំ",
+		"anyRating": "គ្រប់ពិន្ទុ",
+		"mostPopular": "ពេញនិយមបំផុត",
+		"highestRated": "ពិន្ទុខ្ពស់បំផុត",
+		"newest": "ថ្មីបំផុត",
+		"applyFilters": "អនុវត្តតម្រង",
+		"popular": "ពេញនិយម",
+		"results": "{{type}} {{name}}",
+		"curated": "ជ្រើសរើសពី TMDB"
+	},
+	"Details": {
+		"peopleBehindIt": "អ្នកនៅពីក្រោយស្នាដៃ",
+		"cast": "តួសម្តែង",
+		"moreLikeThis": "រឿងស្រដៀងគ្នា",
+		"keepExploring": "បន្តស្វែងរក",
+		"chooseSeason": "ជ្រើសរើសរដូវកាល",
+		"noEpisodeDescription": "មិនមានការពិពណ៌នាភាគនេះទេ។",
+		"episodePagination": "ទំព័រភាគ"
+	},
+	"Player": {
+		"watchTitle": "មើល {{title}}",
+		"enterFullscreen": "ចូលពេញអេក្រង់",
+		"exitFullscreen": "ចេញពីពេញអេក្រង់",
+		"openEpisodes": "បើកបញ្ជីភាគ",
+		"searchEpisodes": "ស្វែងរកភាគ",
+		"closeEpisodes": "បិទបញ្ជីភាគ",
+		"loadingEpisodes": "កំពុងផ្ទុកភាគ…",
+		"noEpisodes": "រកមិនឃើញភាគ។",
+		"watching": "កំពុងមើល",
+		"failedEpisodes": "មិនអាចផ្ទុកភាគបាន។",
+		"fullscreenHint": "ប្រើប៊ូតុងពេញអេក្រង់នេះ ដើម្បីរក្សាប៊ូតុងបញ្ជាភាគ។"
+	},
+	"LivePage": {
+		"eyebrow": "ផ្សាយផ្ទាល់លើ Anuflix",
+		"title": "គ្រប់ការប្រកួត។ នៅកន្លែងតែមួយ។",
+		"description": "មើលព្រឹត្តិការណ៍កំពុងផ្សាយ និងជិតមកដល់ រួមមានបាល់ទាត់ បាល់បោះ កីឡាប្រណាំង កីឡាប្រយុទ្ធ និងច្រើនទៀត។",
+		"liveNow": "{{count}} កំពុងផ្សាយ",
+		"availableMatches": "{{count}} ការប្រកួតមានស្រាប់",
+		"sportsCount": "{{count}} ប្រភេទកីឡា",
+		"search": "ស្វែងរកការប្រកួតផ្សាយផ្ទាល់",
+		"searchPlaceholder": "ស្វែងរកក្រុម លីគ ឬព្រឹត្តិការណ៍",
+		"clearSearch": "សម្អាតការស្វែងរក",
+		"filterBySport": "ត្រងការប្រកួតតាមកីឡា",
+		"allSports": "គ្រប់កីឡា",
+		"allMatches": "គ្រប់ការប្រកួត",
+		"updated": "ធ្វើបច្ចុប្បន្នភាពពេញមួយថ្ងៃ",
+		"matches": "{{count}} ការប្រកួត",
+		"shown": "បង្ហាញ {{count}}",
+		"checking": "កំពុងពិនិត្យកាលវិភាគថ្មីបំផុត។",
+		"tryAnother": "សាកល្បងកីឡា ឬពាក្យស្វែងរកផ្សេង។",
+		"loadError": "មិនអាចផ្ទុកការប្រកួតបាន។ សូមសាកល្បងម្តងទៀត។",
+		"sourceCount": "{{count}} ប្រភព",
+		"sourceCount_other": "{{count}} ប្រភព",
+		"loadMore": "ផ្ទុកការប្រកួតបន្ថែម",
+		"loadingMore": "កំពុងផ្ទុកការប្រកួត...",
+		"finding": "កំពុងស្វែងរកការប្រកួត...",
+		"noMatches": "រកមិនឃើញការប្រកួត",
+		"unavailableTitle": "មិនអាចមើលការផ្សាយផ្ទាល់បាន",
+		"unavailableDescription": "មិនមានប្រភពផ្សាយដែលគាំទ្រសម្រាប់ការប្រកួតនេះនៅពេលនេះទេ។",
+		"availableSources": "ប្រភពផ្សាយដែលមាន",
+		"watchLive": "មើល {{title}}",
+		"homeTeam": "ក្រុមម្ចាស់ផ្ទះ",
+		"awayTeam": "ក្រុមភ្ញៀវ",
+		"versus": "ទល់នឹង",
+		"backToMatches": "ត្រឡប់ទៅគ្រប់ការប្រកួត",
+		"streamDisclaimer": "ការផ្សាយត្រូវបានផ្តល់ដោយភាគីទីបី ហើយអាចខុសគ្នាតាមព្រឹត្តិការណ៍ ឬតំបន់។ សូមជ្រើសរើសប្រភពផ្សេងខាងលើ ប្រសិនបើមិនអាចចាក់បាន។"
+	},
+	"ErrorPage": {
+		"eyebrow": "ការតភ្ជាប់ត្រូវបានរំខាន",
+		"title": "មិនអាចផ្ទុកកម្មវិធីបាន",
+		"description": "ពិនិត្យការតភ្ជាប់របស់អ្នក រួចសាកល្បងផ្ទុកបណ្ណាល័យម្តងទៀត។",
+		"retry": "សាកល្បងម្តងទៀត"
+	},
+	"SearchResults": {
+		"title": "លទ្ធផលសម្រាប់ “{{query}}”"
+	}
 }

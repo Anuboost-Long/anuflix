@@ -2,12 +2,15 @@
 
 import { MediaCard } from "@/components/media/media-card";
 import { Icon } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import type { MediaItem } from "@/lib/tmdb/types";
 import clsx from "clsx";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export function TopTenRow({ items }: Readonly<{ items: MediaItem[] }>) {
 	const rail = useRef<HTMLDivElement>(null);
+	const { t } = useTranslation();
 
 	return (
 		<section className={clsx("min-w-0 max-w-full overflow-hidden")} aria-labelledby="top-ten-title">
@@ -18,19 +21,19 @@ export function TopTenRow({ items }: Readonly<{ items: MediaItem[] }>) {
 					<span
 						className={clsx("text-[10px] font-semibold tracking-[.16em] text-brand-light uppercase")}
 					>
-						What everyone is watching
+						{t(translation.Catalog.TopTenEyebrow)}
 					</span>
 					<h2
 						id="top-ten-title"
 						className={clsx("text-xl font-bold tracking-[-.02em] text-text-primary sm:text-2xl", "mt-1")}
 					>
-						Top 10 today
+						{t(translation.Catalog.TopTenTitle)}
 					</h2>
 				</div>
 				<div className={clsx("hidden gap-2 sm:flex")}>
 					<button
 						type="button"
-						aria-label="Scroll Top 10 left"
+						aria-label={t(translation.Catalog.ScrollLeft, { title: t(translation.Catalog.TopTenTitle) })}
 						onClick={() => rail.current?.scrollBy({ left: -900, behavior: "smooth" })}
 						className={clsx(
 							"grid size-9 place-items-center rounded-full",
@@ -44,7 +47,7 @@ export function TopTenRow({ items }: Readonly<{ items: MediaItem[] }>) {
 					</button>
 					<button
 						type="button"
-						aria-label="Scroll Top 10 right"
+						aria-label={t(translation.Catalog.ScrollRight, { title: t(translation.Catalog.TopTenTitle) })}
 						onClick={() => rail.current?.scrollBy({ left: 900, behavior: "smooth" })}
 						className={clsx(
 							"grid size-9 place-items-center rounded-full",

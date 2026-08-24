@@ -1,3 +1,4 @@
+import { ApiRequestError, ApiServiceServer } from "@/api/api-helper";
 import type {
 	LiveMatch,
 	LiveMatchesPage,
@@ -20,19 +21,19 @@ export class StreamedError extends Error {
 }
 
 async function streamed<T>(path: string, revalidate: number | false): Promise<T> {
-	const response = await fetch(`${STREAMED_URL}${path}`, {
-		headers: { Accept: "application/json" },
-		...(revalidate === false ? { cache: "no-store" as const } : { next: { revalidate } }),
-	});
-
-	if (!response.ok) {
-		throw new StreamedError(
-			`Streamed request failed with status ${response.status}.`,
-			response.status,
-		);
+	try {
+		return await ApiServiceServer<T>({
+			url: `${STREAMED_URL}${path}`,
+			method: "GET",
+			headers: { Accept: "application/json" },
+			revalidate,
+		});
+	} catch (error) {
+		if (error instanceof ApiRequestError) {
+			throw new StreamedError(`Streamed request failed with status ${error.status}.`, error.status);
+		}
+		throw error;
 	}
-
-	return response.json() as Promise<T>;
 }
 
 export async function getLiveCatalog() {

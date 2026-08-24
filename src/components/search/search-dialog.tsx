@@ -1,14 +1,18 @@
 "use client";
 
+import { handleServeSearchMedia } from "@/api/services/search/serve-action";
 import { MediaCard } from "@/components/media/media-card";
 import { Icon } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import type { MediaItem } from "@/lib/tmdb/types";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const TRANSITION_MS = 300;
 
 export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClose: () => void }>) {
+	const { t } = useTranslation();
 	const [query, setQuery] = useState("");
 	const [results, setResults] = useState<MediaItem[]>([]);
 	const [state, setState] = useState<"idle" | "loading" | "ready" | "error">("idle");
@@ -16,6 +20,7 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 	const [visible, setVisible] = useState(false);
 	const dialog = useRef<HTMLDialogElement>(null);
 	const input = useRef<HTMLInputElement>(null);
+	const searchRequest = useRef(0);
 
 	useEffect(() => {
 		let firstFrame = 0;
@@ -75,24 +80,23 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 			return;
 		}
 
-		const controller = new AbortController();
+		const request = ++searchRequest.current;
+		let cancelled = false;
 		const timeout = window.setTimeout(async () => {
 			setState("loading");
 			try {
-				const response = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}`, {
-					signal: controller.signal,
-				});
-				if (!response.ok) throw new Error("Search failed");
-				setResults((await response.json()) as MediaItem[]);
+				const result = await handleServeSearchMedia(trimmed);
+				if (cancelled || request !== searchRequest.current) return;
+				setResults(result);
 				setState("ready");
-			} catch (error) {
-				if ((error as Error).name !== "AbortError") setState("error");
+			} catch {
+				if (!cancelled && request === searchRequest.current) setState("error");
 			}
 		}, 300);
 
 		return () => {
+			cancelled = true;
 			window.clearTimeout(timeout);
-			controller.abort();
 		};
 	}, [query]);
 
@@ -107,7 +111,7 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 				"px-3 pt-16 sm:px-8 sm:pt-8",
 				!visible && "pointer-events-none",
 			)}
-			aria-label="Search Anuflix"
+			aria-label={t(translation.Search.Label)}
 			onCancel={(event) => {
 				event.preventDefault();
 				onClose();
@@ -121,7 +125,7 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 					"transition-opacity duration-250 ease-out motion-reduce:transition-none",
 					visible ? "opacity-100" : "opacity-0",
 				)}
-				aria-label="Close search"
+				aria-label={t(translation.Search.Close)}
 				onClick={onClose}
 			/>
 			<div
@@ -154,8 +158,8 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 									setState("idle");
 								}
 							}}
-							placeholder="Search movies and TV shows..."
-							aria-label="Search movies and TV shows"
+							placeholder={t(translation.Search.Placeholder)}
+							aria-label={t(translation.Search.Label)}
 							className={clsx(
 								"h-full min-w-0 flex-1 outline-none",
 								"bg-transparent",
@@ -172,14 +176,14 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 									setState("idle");
 								}}
 							>
-								Clear
+								{t(translation.Search.Clear)}
 							</button>
 						)}
 					</div>
 					<button
 						type="button"
 						onClick={onClose}
-						aria-label="Close search"
+						aria-label={t(translation.Search.Close)}
 						className="grid size-14 shrink-0 place-items-center rounded-xl border border-border bg-transparent text-text-muted backdrop-blur-xl transition-[color,background-color,border-color,transform] hover:border-border-strong hover:bg-surface-hover hover:text-white motion-safe:hover:scale-[1.03] active:scale-[.97]"
 					>
 						<Icon name="close" className="size-5" />
@@ -208,16 +212,14 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 								>
 									/
 								</span>
-								<p className={clsx("text-sm text-text-secondary", "mt-4")}>
-									Type at least two characters to explore movies and series.
-								</p>
+								<p className={clsx("text-sm text-text-secondary", "mt-4")}>{t(translation.Search.Hint)}</p>
 							</div>
 						</div>
 					)}
 					{state === "loading" && (
 						<div
 							className={clsx("grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6")}
-							aria-label="Searching"
+							aria-label={t(translation.Search.Searching)}
 						>
 							{Array.from({ length: 8 }, (_, index) => (
 								<span key={index} className={clsx("aspect-2/3 animate-pulse rounded-lg", "bg-surface")} />
@@ -226,17 +228,21 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 					)}
 					{state === "error" && (
 						<div className={clsx("text-center", "py-24")}>
-							<h2 className={clsx("text-2xl font-bold text-text-primary")}>Search is unavailable</h2>
+							<h2 className={clsx("text-2xl font-bold text-text-primary")}>
+								{t(translation.Search.UnavailableTitle)}
+							</h2>
 							<p className={clsx("text-sm text-text-secondary", "mt-2")}>
-								Check your connection and try again.
+								{t(translation.Search.UnavailableDescription)}
 							</p>
 						</div>
 					)}
 					{state === "ready" && !results.length && (
 						<div className={clsx("text-center", "py-24")}>
-							<h2 className={clsx("text-2xl font-bold text-text-primary")}>No titles found</h2>
+							<h2 className={clsx("text-2xl font-bold text-text-primary")}>
+								{t(translation.Search.EmptyTitle)}
+							</h2>
 							<p className={clsx("text-sm text-text-secondary", "mt-2")}>
-								Try another title, actor, or keyword.
+								{t(translation.Search.EmptyDescription)}
 							</p>
 						</div>
 					)}
@@ -244,9 +250,11 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 						<>
 							<div className={clsx("flex items-end justify-between gap-3", "mb-5")}>
 								<h2 className={clsx("text-xl font-bold text-text-primary")}>
-									Results for “{query.trim()}”
+									{t(translation.SearchResults.Title, { query: query.trim() })}
 								</h2>
-								<span className={clsx("text-xs text-text-muted")}>{results.length} titles</span>
+								<span className={clsx("text-xs text-text-muted")}>
+									{t(translation.Common.Titles, { count: results.length })}
+								</span>
 							</div>
 							<div className={clsx("grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-4 lg:grid-cols-6")}>
 								{results.map((media) => (

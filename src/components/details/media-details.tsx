@@ -2,6 +2,8 @@ import { EpisodeBrowser } from "@/components/details/episode-browser";
 import { MediaRow } from "@/components/media/media-row";
 import { WatchlistButton } from "@/components/media/watchlist-button";
 import { Icon } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
+import { getServerTranslation } from "@/i18n/server";
 import { watchPath } from "@/lib/playback/routes";
 import { tmdbImage } from "@/lib/tmdb/images";
 import type { MediaItem, TmdbDetails, TmdbEpisodePage } from "@/lib/tmdb/types";
@@ -9,7 +11,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 
-export function MediaDetails({
+export async function MediaDetails({
 	media,
 	details,
 	recommendations,
@@ -20,6 +22,7 @@ export function MediaDetails({
 	recommendations: MediaItem[];
 	episodePage?: TmdbEpisodePage;
 }>) {
+	const t = await getServerTranslation();
 	const backdrop = tmdbImage.backdrop(media.backdropPath);
 	const cast = (details.credits ?? details.aggregate_credits)?.cast.slice(0, 10) ?? [];
 	const runtime = details.runtime ?? details.episode_run_time?.[0];
@@ -64,8 +67,10 @@ export function MediaDetails({
 					<div className="mt-5 flex flex-wrap items-center gap-3 text-sm font-medium text-text-secondary">
 						{media.year && <span>{media.year}</span>}
 						<span className="text-brand-light">★ {media.voteAverage.toFixed(1)}</span>
-						{runtime && <span>{runtime} min</span>}
-						{details.number_of_seasons && <span>{details.number_of_seasons} seasons</span>}
+						{runtime && <span>{t(translation.Common.Minutes, { count: runtime })}</span>}
+						{details.number_of_seasons && (
+							<span>{t(translation.Common.Seasons, { count: details.number_of_seasons })}</span>
+						)}
 						{details.status && <span>{details.status}</span>}
 						<span className="border border-border-strong px-1.5 py-0.5 text-[11px] text-text-primary">
 							HD
@@ -83,7 +88,7 @@ export function MediaDetails({
 								"transition-colors hover:bg-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-light",
 							)}
 						>
-							<Icon name="play" className="size-5" /> Play now
+							<Icon name="play" className="size-5" /> {t(translation.Common.PlayNow)}
 						</Link>
 						<WatchlistButton media={media} />
 					</div>
@@ -115,10 +120,10 @@ export function MediaDetails({
 				{cast.length > 0 && (
 					<section aria-labelledby="cast-title">
 						<span className="text-[11px] font-semibold tracking-[.16em] text-brand-light uppercase">
-							The people behind it
+							{t(translation.Details.PeopleBehindIt)}
 						</span>
 						<h2 id="cast-title" className="mt-1 text-2xl font-bold tracking-tight text-text-primary">
-							Cast
+							{t(translation.Details.Cast)}
 						</h2>
 						<div className="mt-6 flex gap-5 overflow-x-auto pb-3">
 							{cast.map((person) => {
@@ -144,8 +149,8 @@ export function MediaDetails({
 				)}
 
 				<MediaRow
-					title="More like this"
-					eyebrow="Keep exploring"
+					title={t(translation.Details.MoreLikeThis)}
+					eyebrow={t(translation.Details.KeepExploring)}
 					items={recommendations}
 					gutter={false}
 				/>

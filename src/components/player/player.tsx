@@ -2,11 +2,13 @@
 
 import { PlayerEpisodeSelector } from "@/components/player/player-episode-selector";
 import { Icon } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import { playbackProvider } from "@/lib/playback/provider";
 import { progressStorage } from "@/lib/progress/storage";
 import type { MediaItem, TmdbSeason, TmdbSeasonSummary } from "@/lib/tmdb/types";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const FULLSCREEN_HINT_KEY = "anuflix_fullscreen_hint_seen";
 
@@ -58,6 +60,7 @@ export function Player({
 	seasons?: TmdbSeasonSummary[];
 	episodes?: TmdbSeason["episodes"];
 }>) {
+	const { t } = useTranslation();
 	const playerUrl = playbackProvider.buildPlayerUrl({
 		mediaId: media.id,
 		mediaType: media.mediaType,
@@ -179,7 +182,7 @@ export function Player({
 			<iframe
 				key={`${media.mediaType}-${media.id}-${season ?? 0}-${episode ?? 0}`}
 				src={playerUrl}
-				title={`Watch ${media.title}`}
+				title={t(translation.Player.WatchTitle, { title: media.title })}
 				allow="autoplay; picture-in-picture; encrypted-media"
 				onLoad={(event) => event.currentTarget.contentWindow?.focus()}
 				className={clsx("size-full border-0")}
@@ -194,12 +197,14 @@ export function Player({
 						"text-xs leading-5 text-white",
 					)}
 				>
-					Use this fullscreen button to keep episode controls available.
+					{t(translation.Player.FullscreenHint)}
 				</div>
 			)}
 			<button
 				type="button"
-				aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+				aria-label={t(
+					fullscreen ? translation.Player.ExitFullscreen : translation.Player.EnterFullscreen,
+				)}
 				aria-describedby={showFullscreenHint ? "fullscreen-hint" : undefined}
 				onClick={toggleFullscreen}
 				className={clsx(

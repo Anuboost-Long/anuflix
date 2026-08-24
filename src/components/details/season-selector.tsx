@@ -1,8 +1,10 @@
 "use client";
 
 import { SelectInput } from "@/components/shared/select-input";
+import { translation } from "@/constants/translation";
 import type { TmdbSeasonSummary } from "@/lib/tmdb/types";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 export function SeasonSelector({
 	mediaId,
@@ -17,6 +19,7 @@ export function SeasonSelector({
 	onSelect: (season: number) => void;
 	disabled?: boolean;
 }>) {
+	const { t } = useTranslation();
 	function selectSeason(season: number) {
 		if (!seasons.some(({ season_number }) => season_number === season)) return;
 		onSelect(season);
@@ -45,7 +48,7 @@ export function SeasonSelector({
 									: "border-border bg-surface text-text-secondary hover:border-border-strong hover:bg-surface-hover",
 							)}
 						>
-							Season {season.season_number}
+							{t(translation.Common.Season, { number: season.season_number })}
 						</button>
 					))}
 				</div>
@@ -54,9 +57,9 @@ export function SeasonSelector({
 			{seasons.length > 2 ? (
 				<SelectInput
 					id={`season-options-${mediaId}`}
-					ariaLabel="Choose a season"
+					ariaLabel={t(translation.Details.ChooseSeason)}
 					options={seasons.map(({ season_number }) => ({
-						label: `Season ${season_number}`,
+						label: t(translation.Common.Season, { number: season_number }),
 						value: String(season_number),
 					}))}
 					value={String(currentSeason)}

@@ -1,113 +1,342 @@
 {
-  "Shell": {
-    "brandKicker": "Lazify",
-    "brandTitle": "anuflix",
-    "brandDescription": "Base scaffold for routing, translations, and global UI state in a Next.js admin app.",
-    "navigationLabel": "Primary navigation",
-    "collapse": "Collapse sidebar",
-    "expand": "Expand sidebar",
-    "links": {
-      "overview": "Overview",
-      "dashboard": "Dashboard",
-      "settings": "Settings"
-    }
-  },
-  "LocaleSwitcher": {
-    "label": "Language",
-    "english": "English",
-    "khmer": "Khmer"
-  },
-  "ThemeToggle": {
-    "label": "Toggle color theme",
-    "light": "Light",
-    "dark": "Dark"
-  },
-  "HomePage": {
-    "eyebrow": "Created with Lazify",
-    "title": "Your project is already dressed for launch.",
-    "description": "This onboarding screen is generated to prove the starter is not empty: it carries your brand, your theme, and the first impression your users deserve.",
-    "showcase": {
-      "label": "Lazify workspace",
-      "title": "Production starter",
-      "status": "Ready"
-    },
-    "guides": {
-      "theme": {
-        "label": "Theme",
-        "steps": [
-          "Add the token to :root in globals.css",
-          "Give it a value in both light and dark blocks",
-          "Read it in components with var(--token)"
-        ]
-      },
-      "routes": {
-        "label": "Routes",
-        "steps": [
-          "Drop a page.tsx in src/app — the folder is the path",
-          "Add a matching NavLink in app-shell.tsx",
-          "Navigate with next/link or useRouter"
-        ]
-      },
-      "store": {
-        "label": "Store",
-        "steps": [
-          "Define an atom beside the store",
-          "The provider tree in layout.tsx already holds it",
-          "Read and write it with useAtom()"
-        ]
-      }
-    },
-    "stats": {
-      "themeModes": {
-        "value": "2",
-        "label": "Theme modes"
-      },
-      "brandReady": {
-        "value": "100%",
-        "label": "Brand ready"
-      },
-      "blankScreens": {
-        "value": "0",
-        "label": "Blank screens"
-      }
-    },
-    "footer": {
-      "title": "Start building",
-      "description": "Open src/app/page.tsx and replace this screen with your own."
-    }
-  },
-  "DashboardPage": {
-    "eyebrow": "Analytics",
-    "title": "Dashboard workspace",
-    "description": "Use this route as the first feature slice for metrics, charts, and operational summaries.",
-    "metrics": {
-      "revenue": {
-        "label": "Revenue pipeline",
-        "value": "$128,400"
-      },
-      "activeUsers": {
-        "label": "Active users",
-        "value": "8,241"
-      },
-      "conversion": {
-        "label": "Conversion",
-        "value": "14.2%"
-      }
-    }
-  },
-  "SettingsPage": {
-    "eyebrow": "Configuration",
-    "title": "Workspace settings",
-    "description": "Language switching and shared workspace preferences already have their wiring in place.",
-    "preferences": {
-      "language": {
-        "title": "Translation flow",
-        "description": "The locale switcher updates the react-i18next language and the persisted preference atom."
-      },
-      "workspace": {
-        "title": "Shared state",
-        "description": "Expand the atom layer with auth, filters, or UI preferences as the admin surface grows."
-      }
-    }
-  }
+	"Shell": {
+		"brandKicker": "Lazify",
+		"brandTitle": "anuflix",
+		"brandDescription": "Base scaffold for routing, translations, and global UI state in a Next.js admin app.",
+		"navigationLabel": "Primary navigation",
+		"brandHome": "Anuflix home",
+		"collapse": "Collapse sidebar",
+		"expand": "Expand sidebar",
+		"links": {
+			"overview": "Overview",
+			"dashboard": "Dashboard",
+			"settings": "Settings"
+		}
+	},
+	"Metadata": {
+		"defaultTitle": "Anuflix — Find your next story",
+		"description": "Discover movies and TV shows, build your list, and continue watching across Anuflix.",
+		"animeTitle": "Anime",
+		"animeDescription": "Explore anime series and films on Anuflix.",
+		"liveTitle": "Live sports",
+		"liveDescription": "Browse live and upcoming sports matches on Anuflix.",
+		"matchTitle": "{{title}} live",
+		"matchDescription": "Watch {{title}} live on Anuflix."
+	},
+	"LocaleSwitcher": {
+		"label": "Language",
+		"english": "English",
+		"englishHint": "Use English",
+		"khmer": "Khmer",
+		"khmerHint": "Use Khmer"
+	},
+	"Navigation": {
+		"primary": "Primary navigation",
+		"mobile": "Mobile navigation",
+		"home": "Home",
+		"browse": "Browse",
+		"catalog": "Catalog",
+		"explore": "Explore",
+		"personal": "Personal",
+		"movies": "Movies",
+		"tv": "TV",
+		"tvShows": "TV shows",
+		"anime": "Anime",
+		"live": "Live",
+		"liveSports": "Live sports",
+		"discover": "Discover",
+		"discoverHint": "Find something new",
+		"myList": "My List",
+		"settings": "Settings",
+		"search": "Search",
+		"searchLive": "Search live"
+	},
+	"Footer": {
+		"navigation": "Footer navigation",
+		"description": "Explore movies and series. Playback availability may vary by title and region.",
+		"disclaimer": "This product uses the TMDB API but is not endorsed or certified by TMDB."
+	},
+	"Search": {
+		"label": "Search Anuflix",
+		"close": "Close search",
+		"placeholder": "Search movies and TV shows...",
+		"clear": "Clear",
+		"hint": "Type at least two characters to explore movies and series.",
+		"searching": "Searching",
+		"unavailableTitle": "Search is unavailable",
+		"unavailableDescription": "Check your connection and try again.",
+		"emptyTitle": "No titles found",
+		"emptyDescription": "Try another title, actor, or keyword."
+	},
+	"HomePage": {
+		"eyebrow": "Created with Lazify",
+		"title": "Your project is already dressed for launch.",
+		"description": "This onboarding screen is generated to prove the starter is not empty: it carries your brand, your theme, and the first impression your users deserve.",
+		"showcase": {
+			"label": "Lazify workspace",
+			"title": "Production starter",
+			"status": "Ready"
+		},
+		"guides": {
+			"theme": {
+				"label": "Theme",
+				"steps": [
+					"Add the token to :root in globals.css",
+					"Give it a value in both light and dark blocks",
+					"Read it in components with var(--token)"
+				]
+			},
+			"routes": {
+				"label": "Routes",
+				"steps": [
+					"Drop a page.tsx in src/app — the folder is the path",
+					"Add a matching NavLink in app-shell.tsx",
+					"Navigate with next/link or useRouter"
+				]
+			},
+			"store": {
+				"label": "Store",
+				"steps": [
+					"Define an atom beside the store",
+					"The provider tree in layout.tsx already holds it",
+					"Read and write it with useAtom()"
+				]
+			}
+		},
+		"stats": {
+			"themeModes": {
+				"value": "2",
+				"label": "Theme modes"
+			},
+			"brandReady": {
+				"value": "100%",
+				"label": "Brand ready"
+			},
+			"blankScreens": {
+				"value": "0",
+				"label": "Blank screens"
+			}
+		},
+		"footer": {
+			"title": "Start building",
+			"description": "Open src/app/page.tsx and replace this screen with your own."
+		}
+	},
+	"DashboardPage": {
+		"eyebrow": "Analytics",
+		"title": "Dashboard workspace",
+		"description": "Use this route as the first feature slice for metrics, charts, and operational summaries.",
+		"metrics": {
+			"revenue": {
+				"label": "Revenue pipeline",
+				"value": "$128,400"
+			},
+			"activeUsers": {
+				"label": "Active users",
+				"value": "8,241"
+			},
+			"conversion": {
+				"label": "Conversion",
+				"value": "14.2%"
+			}
+		}
+	},
+	"SettingsPage": {
+		"eyebrow": "Preferences",
+		"title": "Settings",
+		"description": "Choose the language Anuflix uses for navigation and shared controls.",
+		"savedOnDevice": "Your preferences are saved on this device.",
+		"preferences": {
+			"language": {
+				"title": "Language",
+				"description": "Choose the language used across navigation and controls."
+			},
+			"workspace": {
+				"title": "Shared state",
+				"description": "Expand the atom layer with auth, filters, or UI preferences as the admin surface grows."
+			}
+		}
+	},
+	"Common": {
+		"back": "Back",
+		"backToDetails": "Back to details",
+		"backToEpisodes": "Back to episodes",
+		"film": "Film",
+		"movie": "Movie",
+		"series": "Series",
+		"anime": "Anime",
+		"new": "New",
+		"live": "Live",
+		"playNow": "Play now",
+		"myList": "My List",
+		"inMyList": "In My List",
+		"season": "Season {{number}}",
+		"seasons": "{{count}} seasons",
+		"episode": "Episode {{number}}",
+		"episodes": "Episodes",
+		"episodeCount": "{{count}} episodes",
+		"minutes": "{{count}} min",
+		"previous": "Previous",
+		"next": "Next",
+		"pageOf": "Page {{page}} of {{total}}",
+		"titles": "{{count}} titles"
+	},
+	"Catalog": {
+		"emptyTitle": "No titles found",
+		"emptyDescription": "Try changing one or more filters.",
+		"myListEmptyTitle": "Your list is ready for a first title",
+		"myListEmptyDescription": "Use My List on any movie or series to keep it here.",
+		"addToList": "Add {{title}} to My List",
+		"removeFromList": "Remove {{title}} from My List",
+		"viewDetails": "View details for {{title}}",
+		"continueEyebrow": "Pick up where you left off",
+		"continueTitle": "Continue watching",
+		"watched": "{{count}}% watched",
+		"topTenEyebrow": "What everyone is watching",
+		"topTenTitle": "Top 10 today",
+		"scrollLeft": "Scroll {{title}} left",
+		"scrollRight": "Scroll {{title}} right",
+		"poster": "{{title}} poster"
+	},
+	"Hero": {
+		"featuredToday": "Featured today",
+		"moreInformation": "More information about {{title}}",
+		"recommendations": "Featured recommendations",
+		"showSlide": "Show {{title}}"
+	},
+	"Home": {
+		"emptyTitle": "Nothing to feature yet",
+		"emptyDescription": "Refresh in a moment to explore today’s lineup.",
+		"trendingMovies": "Trending movies",
+		"freshMomentum": "Fresh momentum",
+		"popularMovies": "Popular movies",
+		"crowdFavorites": "Crowd favorites",
+		"popularSeries": "Popular series",
+		"storiesWorthStayingFor": "Stories worth staying for",
+		"topRatedFilms": "Top rated films",
+		"criticallyAcclaimed": "Critically acclaimed",
+		"bingeWorthyTv": "Binge-worthy TV",
+		"highestRated": "The highest rated"
+	},
+	"AnimePage": {
+		"spotlight": "Anime spotlight",
+		"popularSeries": "Popular anime series",
+		"mostWatched": "Most watched",
+		"topRated": "Top rated anime",
+		"audienceAcclaimed": "Audience acclaimed",
+		"newReleases": "New anime releases",
+		"freshArrivals": "Fresh arrivals",
+		"mature": "Mature anime"
+	},
+	"MoviesPage": {
+		"eyebrow": "The big screen, at home",
+		"description": "Fresh releases, crowd favorites, and the films people keep talking about.",
+		"popularNow": "Popular now",
+		"nowPlaying": "Now playing",
+		"topRated": "Top rated",
+		"comingSoon": "Coming soon"
+	},
+	"TvPage": {
+		"eyebrow": "Stories that stay with you",
+		"description": "Discover returning favorites, new obsessions, and today’s most talked-about series.",
+		"popularSeries": "Popular series",
+		"onTheAir": "On the air",
+		"airingToday": "Airing today",
+		"topRated": "Top rated"
+	},
+	"MyListPage": {
+		"eyebrow": "Saved for later",
+		"description": "A personal shelf for every movie and series you want to come back to."
+	},
+	"SearchPage": {
+		"eyebrow": "Across movies and TV",
+		"button": "Search",
+		"prompt": "Enter at least two characters to find a title."
+	},
+	"DiscoverPage": {
+		"eyebrow": "Find your next watch",
+		"title": "Discover",
+		"description": "Shape the catalog by type, genre, year, rating, and the way you want results ordered.",
+		"type": "Type",
+		"genre": "Genre",
+		"year": "Year",
+		"rating": "Rating",
+		"sort": "Sort",
+		"allGenres": "All genres",
+		"anyYear": "Any year",
+		"anyRating": "Any rating",
+		"mostPopular": "Most popular",
+		"highestRated": "Highest rated",
+		"newest": "Newest",
+		"applyFilters": "Apply filters",
+		"popular": "Popular",
+		"results": "{{name}} {{type}}",
+		"curated": "Curated from TMDB"
+	},
+	"Details": {
+		"peopleBehindIt": "The people behind it",
+		"cast": "Cast",
+		"moreLikeThis": "More like this",
+		"keepExploring": "Keep exploring",
+		"chooseSeason": "Choose a season",
+		"noEpisodeDescription": "No episode description is available.",
+		"episodePagination": "Episode pagination"
+	},
+	"Player": {
+		"watchTitle": "Watch {{title}}",
+		"enterFullscreen": "Enter fullscreen",
+		"exitFullscreen": "Exit fullscreen",
+		"openEpisodes": "Open episodes",
+		"searchEpisodes": "Search episodes",
+		"closeEpisodes": "Close episodes",
+		"loadingEpisodes": "Loading episodes…",
+		"noEpisodes": "No episodes found.",
+		"watching": "Watching",
+		"failedEpisodes": "Episodes could not be loaded.",
+		"fullscreenHint": "Use this fullscreen button to keep episode controls available."
+	},
+	"LivePage": {
+		"eyebrow": "Live on Anuflix",
+		"title": "Every match. One place.",
+		"description": "Browse live and upcoming events across football, basketball, motorsports, combat sports, and more.",
+		"liveNow": "{{count}} live now",
+		"availableMatches": "{{count}} available matches",
+		"sportsCount": "{{count}} sports",
+		"search": "Search live matches",
+		"searchPlaceholder": "Search teams, leagues, or events",
+		"clearSearch": "Clear live search",
+		"filterBySport": "Filter live matches by sport",
+		"allSports": "All sports",
+		"allMatches": "All matches",
+		"updated": "Updated throughout the day",
+		"matches": "{{count}} matches",
+		"shown": "{{count}} shown",
+		"checking": "Checking the latest schedule.",
+		"tryAnother": "Try another sport or search term.",
+		"loadError": "Live matches could not be loaded. Please try again.",
+		"sourceCount": "{{count}} source",
+		"sourceCount_other": "{{count}} sources",
+		"loadMore": "Load more matches",
+		"loadingMore": "Loading matches...",
+		"finding": "Finding matches...",
+		"noMatches": "No matches found",
+		"unavailableTitle": "Live view is unavailable",
+		"unavailableDescription": "No supported stream is available for this match right now.",
+		"availableSources": "Available live sources",
+		"watchLive": "Watch {{title}}",
+		"homeTeam": "Home team",
+		"awayTeam": "Away team",
+		"versus": "VS",
+		"backToMatches": "Back to all matches",
+		"streamDisclaimer": "Streams are supplied by a third-party provider and may vary by event or region. Choose another source above if playback is unavailable."
+	},
+	"ErrorPage": {
+		"eyebrow": "Connection interrupted",
+		"title": "The lineup could not load",
+		"description": "Check your connection, then try loading the catalog again.",
+		"retry": "Try again"
+	},
+	"SearchResults": {
+		"title": "Results for “{{query}}”"
+	}
 }

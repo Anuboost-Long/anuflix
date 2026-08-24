@@ -1,11 +1,14 @@
 "use client";
 
+import { handleServeGetSeason } from "@/api/services/tv/serve-action";
 import { Icon } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import { tmdbImage } from "@/lib/tmdb/images";
 import type { TmdbSeason, TmdbSeasonSummary } from "@/lib/tmdb/types";
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function PlayerEpisodeSelector({
 	mediaId,
@@ -20,6 +23,8 @@ export function PlayerEpisodeSelector({
 	seasons: TmdbSeasonSummary[];
 	episodes: TmdbSeason["episodes"];
 }>) {
+	const { t } = useTranslation();
+	const dialog = useRef<HTMLDialogElement>(null);
 	const search = useRef<HTMLInputElement>(null);
 	const [open, setOpen] = useState(false);
 	const [seasonMenu, setSeasonMenu] = useState(false);
@@ -28,7 +33,7 @@ export function PlayerEpisodeSelector({
 	const [seasonEpisodes, setSeasonEpisodes] = useState(episodes);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
-	const request = useRef<AbortController>(null);
+	const request = useRef(0);
 	const seasonCache = useRef(new Map<number, TmdbSeason["episodes"]>([[currentSeason, episodes]]));
 	const term = query.trim().toLowerCase();
 	const filteredEpisodes = term
@@ -39,23 +44,21 @@ export function PlayerEpisodeSelector({
 		: seasonEpisodes;
 
 	useEffect(() => {
-		if (!open) return;
+		const element = dialog.current;
+		if (!element) return;
 
-		function closeOnEscape(event: KeyboardEvent) {
-			if (event.key === "Escape") setOpen(false);
+		if (open) {
+			if (!element.open) element.showModal();
+			search.current?.focus();
+		} else if (element.open) {
+			element.close();
 		}
-
-		document.addEventListener("keydown", closeOnEscape);
-		search.current?.focus();
-		return () => document.removeEventListener("keydown", closeOnEscape);
 	}, [open]);
-
-	useEffect(() => () => request.current?.abort(), []);
 
 	async function selectSeason(season: number) {
 		if (!seasons.some(({ season_number }) => season_number === season)) return;
 
-		request.current?.abort();
+		const requestId = ++request.current;
 		setSelectedSeason(season);
 		setSeasonMenu(false);
 		setQuery("");
@@ -68,25 +71,20 @@ export function PlayerEpisodeSelector({
 			return;
 		}
 
-		const controller = new AbortController();
-		request.current = controller;
 		setSeasonEpisodes([]);
 		setLoading(true);
 
 		try {
-			const response = await fetch(`/api/tv/${mediaId}/season/${season}?full=true`, {
-				signal: controller.signal,
-			});
-			if (!response.ok) throw new Error("Episodes could not be loaded.");
-			const result = (await response.json()) as TmdbSeason;
+			const result = await handleServeGetSeason({ mediaId, season });
+			if (requestId !== request.current) return;
 			seasonCache.current.set(season, result.episodes);
 			setSeasonEpisodes(result.episodes);
-		} catch (requestError) {
-			if (requestError instanceof Error && requestError.name !== "AbortError") {
-				setError("Episodes could not be loaded. Choose the season again to retry.");
+		} catch {
+			if (requestId === request.current) {
+				setError(t(translation.Player.FailedEpisodes));
 			}
 		} finally {
-			if (!controller.signal.aborted) setLoading(false);
+			if (requestId === request.current) setLoading(false);
 		}
 	}
 
@@ -98,7 +96,7 @@ export function PlayerEpisodeSelector({
 		<>
 			<button
 				type="button"
-				aria-label="Open episodes"
+				aria-label={t(translation.Player.OpenEpisodes)}
 				onClick={() => setOpen(true)}
 				className={clsx(
 					"fixed top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] bottom-auto left-auto z-30 m-0 grid size-11 max-h-none max-w-none place-items-center rounded-full p-0",
@@ -111,17 +109,14 @@ export function PlayerEpisodeSelector({
 				<Icon name="film" className={clsx("size-6")} />
 			</button>
 
-			<section
-				role="dialog"
-				aria-label="Episodes"
-				aria-hidden={!open}
-				inert={!open}
+			<dialog
+				ref={dialog}
+				aria-label={t(translation.Common.Episodes)}
+				onCancel={() => setOpen(false)}
 				className={clsx(
-					"fixed top-[max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))] right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] left-auto z-40 m-0 w-[min(26rem,calc(100vw-2rem))] max-h-none max-w-none overflow-y-auto overscroll-contain rounded-xl p-0",
-					"bg-black/[.94] backdrop-blur-xl",
+					"fixed top-[max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))] right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] left-auto z-40 m-0 max-h-[calc(100dvh-max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))-max(1rem,env(safe-area-inset-bottom)))] w-[min(26rem,calc(100vw-2rem))] max-w-none overflow-y-auto overscroll-contain rounded-xl p-0 backdrop:bg-transparent",
+					"bg-black/94 backdrop-blur-xl",
 					"border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,.55)]",
-					"transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none",
-					open ? "visible translate-x-0 opacity-100" : "invisible translate-x-3 opacity-0",
 				)}
 			>
 				<div
@@ -142,7 +137,7 @@ export function PlayerEpisodeSelector({
 								"transition-colors hover:bg-brand-primary/25 focus-visible:outline-2 focus-visible:outline-white",
 							)}
 						>
-							Season {selectedSeason}
+							{t(translation.Common.Season, { number: selectedSeason })}
 							<Icon
 								name="arrow-right"
 								className={clsx("size-4 rotate-90 transition-transform", seasonMenu && "-rotate-90")}
@@ -153,7 +148,7 @@ export function PlayerEpisodeSelector({
 							inert={!seasonMenu}
 							className={clsx(
 								"absolute top-[calc(100%+.5rem)] left-0 max-h-64 min-w-full overflow-y-auto rounded-xl p-1",
-								"border border-white/10 bg-background-secondary/[.98]",
+								"border border-white/10 bg-background-secondary/98",
 								"shadow-[0_18px_50px_rgba(0,0,0,.65)]",
 								"transition-[opacity,transform,visibility] duration-150",
 								seasonMenu ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
@@ -172,7 +167,7 @@ export function PlayerEpisodeSelector({
 											: "text-text-secondary hover:bg-white/8 hover:text-white",
 									)}
 								>
-									Season {season_number}
+									{t(translation.Common.Season, { number: season_number })}
 								</button>
 							))}
 						</div>
@@ -189,10 +184,10 @@ export function PlayerEpisodeSelector({
 						<input
 							ref={search}
 							type="search"
-							aria-label="Search episodes"
+							aria-label={t(translation.Player.SearchEpisodes)}
 							value={query}
 							onChange={(event) => setQuery(event.target.value)}
-							placeholder="Search episodes"
+							placeholder={t(translation.Player.SearchEpisodes)}
 							className={clsx(
 								"min-w-0 flex-1 bg-transparent outline-none",
 								"text-sm text-white placeholder:text-text-muted",
@@ -202,13 +197,13 @@ export function PlayerEpisodeSelector({
 
 					<button
 						type="button"
-						aria-label="Close episodes"
+						aria-label={t(translation.Player.CloseEpisodes)}
 						onClick={() => setOpen(false)}
 						className={clsx(
 							"grid size-10 shrink-0 place-items-center rounded-lg",
-							"border border-white/10 bg-white/[.08]",
+							"border border-white/10 bg-white/8",
 							"text-white",
-							"transition-colors hover:bg-white/[.15] focus-visible:outline-2 focus-visible:outline-white",
+							"transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-white",
 						)}
 					>
 						<Icon name="close" className={clsx("size-5")} />
@@ -217,9 +212,12 @@ export function PlayerEpisodeSelector({
 
 				<div aria-busy={loading} className={clsx("w-full px-3 pt-6 pb-8 sm:px-4 sm:pt-8")}>
 					<header className={clsx("mb-5 text-center")}>
-						<h2 className={clsx("text-2xl font-black text-white")}>Season {selectedSeason}</h2>
+						<h2 className={clsx("text-2xl font-black text-white")}>
+							{t(translation.Common.Season, { number: selectedSeason })}
+						</h2>
 						<p className={clsx("mt-2 text-xs font-bold tracking-[.18em] text-text-secondary uppercase")}>
-							<span className={clsx("text-brand-light")}>•</span> {seasonEpisodes.length} episodes
+							<span className={clsx("text-brand-light")}>•</span>{" "}
+							{t(translation.Common.EpisodeCount, { count: seasonEpisodes.length })}
 						</p>
 					</header>
 
@@ -237,7 +235,7 @@ export function PlayerEpisodeSelector({
 									className={clsx(
 										"group relative block aspect-video w-full overflow-hidden rounded-lg text-left",
 										"bg-background-secondary",
-										selected ? "ring-2 ring-white" : "ring-1 ring-white/[.08]",
+										selected ? "ring-2 ring-white" : "ring-1 ring-white/8",
 										"transition-transform duration-300 hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
 									)}
 								>
@@ -268,22 +266,24 @@ export function PlayerEpisodeSelector({
 														"text-[10px] font-black tracking-wide text-white uppercase sm:text-xs",
 													)}
 												>
-													Watching
+													{t(translation.Player.Watching)}
 												</span>
 											)}
-											<strong className={clsx("text-base font-black text-white sm:text-lg")}>
+											<strong
+												className={clsx(
+													"line-clamp-2 min-w-0 flex-1 text-sm font-black text-white sm:text-base",
+												)}
+											>
 												{item.episode_number}. {item.name}
 											</strong>
 										</span>
 										{item.runtime && (
 											<span className={clsx("mt-1 block text-sm font-semibold text-text-secondary")}>
-												{item.runtime} min
+												{t(translation.Common.Minutes, { count: item.runtime })}
 											</span>
 										)}
 										{item.overview && (
-											<span
-												className={clsx("mt-2 hidden line-clamp-2 text-sm leading-5 text-white/80 sm:block")}
-											>
+											<span className={clsx("mt-2 hidden text-xs leading-4 text-white/80 sm:line-clamp-2")}>
 												{item.overview}
 											</span>
 										)}
@@ -294,7 +294,9 @@ export function PlayerEpisodeSelector({
 					</div>
 
 					{loading ? (
-						<p className={clsx("py-16 text-center text-sm text-text-secondary")}>Loading episodes…</p>
+						<p className={clsx("py-16 text-center text-sm text-text-secondary")}>
+							{t(translation.Player.LoadingEpisodes)}
+						</p>
 					) : null}
 					{error ? (
 						<p role="alert" className={clsx("py-16 text-center text-sm text-red-300")}>
@@ -302,10 +304,12 @@ export function PlayerEpisodeSelector({
 						</p>
 					) : null}
 					{!loading && !error && filteredEpisodes.length === 0 && (
-						<p className={clsx("py-20 text-center text-sm text-text-secondary")}>No episodes found.</p>
+						<p className={clsx("py-20 text-center text-sm text-text-secondary")}>
+							{t(translation.Player.NoEpisodes)}
+						</p>
 					)}
 				</div>
-			</section>
+			</dialog>
 		</>
 	);
 }

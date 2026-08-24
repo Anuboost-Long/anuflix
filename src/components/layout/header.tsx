@@ -3,26 +3,28 @@
 import { SearchDialog } from "@/components/search/search-dialog";
 import { Brand } from "@/components/shared/brand";
 import { Icon, type IconName } from "@/components/shared/icon";
+import { translation } from "@/constants/translation";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const links: Array<[string, string, IconName]> = [
-	["Home", "/", "home"],
-	["Live", "/live", "radio"],
+	[translation.Navigation.Home, "/", "home"],
+	[translation.Navigation.Live, "/live", "radio"],
 ];
 
 const browseLinks: Array<[string, string, IconName]> = [
-	["Movies", "/movies", "film"],
-	["TV Shows", "/tv", "tv"],
-	["Anime", "/anime", "spark"],
-	["Discover", "/discover", "compass"],
+	[translation.Navigation.Movies, "/movies", "film"],
+	[translation.Navigation.TvShows, "/tv", "tv"],
+	[translation.Navigation.Anime, "/anime", "spark"],
+	[translation.Navigation.Discover, "/discover", "compass"],
 ];
 
 const personalLinks: Array<[string, string, IconName]> = [
-	["My List", "/my-list", "bookmark"],
-	["Settings", "/settings", "settings"],
+	[translation.Navigation.MyList, "/my-list", "bookmark"],
+	[translation.Navigation.Settings, "/settings", "settings"],
 ];
 
 function HeaderLink({
@@ -56,6 +58,7 @@ function HeaderLink({
 }
 
 export function Header() {
+	const { t } = useTranslation();
 	const pathname = usePathname();
 	const liveSearch = pathname === "/live";
 	const [scrolled, setScrolled] = useState(false);
@@ -134,11 +137,14 @@ export function Header() {
 				)}
 			>
 				<Brand />
-				<nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+				<nav
+					className="hidden items-center gap-1 md:flex"
+					aria-label={t(translation.Navigation.Primary)}
+				>
 					{links.slice(0, 1).map(([label, href, icon]) => (
 						<HeaderLink
 							key={href}
-							label={label}
+							label={t(label)}
 							href={href}
 							icon={icon}
 							active={pathname === href}
@@ -161,7 +167,7 @@ export function Header() {
 							)}
 						>
 							<Icon name="film" className="size-[18px]" />
-							<span>Browse</span>
+							<span>{t(translation.Navigation.Browse)}</span>
 						</button>
 						{browseOpen ? (
 							<div
@@ -171,14 +177,16 @@ export function Header() {
 									"bg-background-secondary/98 backdrop-blur-xl",
 									"border border-border",
 								)}
-								aria-label="Browse"
+								aria-label={t(translation.Navigation.Browse)}
 							>
 								<div className="flex h-12 items-center justify-center border-b border-border">
-									<strong className="text-sm font-semibold text-text-primary">Browse</strong>
+									<strong className="text-sm font-semibold text-text-primary">
+										{t(translation.Navigation.Browse)}
+									</strong>
 								</div>
 								<div className="p-3">
 									<span className="px-1 text-[10px] font-semibold tracking-[.16em] text-text-muted uppercase">
-										Catalog
+										{t(translation.Navigation.Catalog)}
 									</span>
 									<div className="mt-2 grid grid-cols-3 gap-2">
 										{browseLinks.slice(0, 3).map(([label, href, icon]) => {
@@ -203,14 +211,14 @@ export function Header() {
 													<span className="grid size-10 place-items-center rounded-md border border-border-strong bg-background text-brand-light transition-colors group-hover/tile:border-brand-light/50 group-hover/tile:bg-brand-primary/10">
 														<Icon name={icon} className="size-5" />
 													</span>
-													<span>{label}</span>
+													<span>{t(label)}</span>
 												</Link>
 											);
 										})}
 									</div>
 
 									<span className="mt-4 block px-1 text-[10px] font-semibold tracking-[.16em] text-text-muted uppercase">
-										Explore
+										{t(translation.Navigation.Explore)}
 									</span>
 									<Link
 										href="/discover"
@@ -227,13 +235,17 @@ export function Header() {
 											<Icon name="compass" className="size-[18px]" />
 										</span>
 										<span>
-											<strong className="block font-medium text-text-primary">Discover</strong>
-											<span className="mt-0.5 block text-xs text-text-muted">Find something new</span>
+											<strong className="block font-medium text-text-primary">
+												{t(translation.Navigation.Discover)}
+											</strong>
+											<span className="mt-0.5 block text-xs text-text-muted">
+												{t(translation.Navigation.DiscoverHint)}
+											</span>
 										</span>
 									</Link>
 
 									<span className="mt-4 block px-1 text-[10px] font-semibold tracking-[.16em] text-text-muted uppercase">
-										Personal
+										{t(translation.Navigation.Personal)}
 									</span>
 									<div className="mt-2 grid grid-cols-2 gap-2">
 										{personalLinks.map(([label, href, icon]) => (
@@ -250,7 +262,7 @@ export function Header() {
 												)}
 											>
 												<Icon name={icon} className="size-[18px]" />
-												<span>{label}</span>
+												<span>{t(label)}</span>
 											</Link>
 										))}
 									</div>
@@ -261,7 +273,7 @@ export function Header() {
 					{links.slice(1).map(([label, href, icon]) => (
 						<HeaderLink
 							key={href}
-							label={label}
+							label={t(label)}
 							href={href}
 							icon={icon}
 							active={pathname === href || pathname.startsWith(`${href}/`)}
@@ -282,7 +294,9 @@ export function Header() {
 					onClick={openSearch}
 				>
 					<Icon name="search" className={clsx("size-4")} />
-					<span className={clsx("hidden sm:inline")}>{liveSearch ? "Search live" : "Search"}</span>
+					<span className={clsx("hidden sm:inline")}>
+						{liveSearch ? t(translation.Navigation.SearchLive) : t(translation.Navigation.Search)}
+					</span>
 					<kbd
 						className={clsx(
 							"hidden rounded sm:inline",
