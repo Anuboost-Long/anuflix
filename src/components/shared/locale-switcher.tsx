@@ -37,7 +37,7 @@ export function LocaleSwitcher() {
 		<fieldset className={clsx("grid gap-3 border-0 p-0 sm:grid-cols-2")}>
 			<legend className={clsx("sr-only")}>{t(translation.LocaleSwitcher.Label)}</legend>
 			{languages.map(({ code, hint, label, value }) => (
-				<label key={value} className={clsx("cursor-pointer")}>
+				<label key={value} aria-label={t(label)} className={clsx("cursor-pointer")}>
 					<input
 						type="radio"
 						name="language"

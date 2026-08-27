@@ -68,7 +68,6 @@ export function TopTenRow({ items }: Readonly<{ items: MediaItem[] }>) {
 					"px-[clamp(1.25rem,4vw,4.5rem)] pb-6",
 					"sm:auto-cols-[40vw] md:auto-cols-[31vw] lg:auto-cols-[25vw] xl:auto-cols-[21vw]",
 				)}
-				tabIndex={0}
 			>
 				{items.slice(0, 10).map((media, index) => (
 					<div key={`${media.mediaType}-${media.id}`} className={clsx("relative min-w-0 pl-[42%]")}>

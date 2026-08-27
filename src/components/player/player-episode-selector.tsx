@@ -114,14 +114,15 @@ export function PlayerEpisodeSelector({
 				aria-label={t(translation.Common.Episodes)}
 				onCancel={() => setOpen(false)}
 				className={clsx(
-					"fixed top-[max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))] right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] left-auto z-40 m-0 max-h-[calc(100dvh-max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))-max(1rem,env(safe-area-inset-bottom)))] w-[min(26rem,calc(100vw-2rem))] max-w-none overflow-y-auto overscroll-contain rounded-xl p-0 backdrop:bg-transparent",
+					"fixed inset-x-0 bottom-0 top-auto z-40 m-0 max-h-[85dvh] w-full max-w-none overflow-y-auto overscroll-contain rounded-t-2xl p-0 backdrop:bg-black/55",
+					"sm:top-[max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))] sm:right-[max(1rem,env(safe-area-inset-right))] sm:bottom-[max(1rem,env(safe-area-inset-bottom))] sm:left-auto sm:max-h-[calc(100dvh-max(4.75rem,calc(env(safe-area-inset-top)+4.75rem))-max(1rem,env(safe-area-inset-bottom)))] sm:w-[min(26rem,calc(100vw-2rem))] sm:rounded-xl sm:backdrop:bg-transparent",
 					"bg-black/94 backdrop-blur-xl",
 					"border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,.55)]",
 				)}
 			>
 				<div
 					className={clsx(
-						"sticky top-0 z-10 flex items-center gap-2 bg-black/90 p-3 backdrop-blur-xl",
+						"sticky top-0 z-10 flex flex-wrap items-center gap-2 bg-black/90 p-3 backdrop-blur-xl sm:flex-nowrap",
 						"border-b border-white/10",
 					)}
 				>
@@ -175,7 +176,7 @@ export function PlayerEpisodeSelector({
 
 					<label
 						className={clsx(
-							"flex h-10 min-w-0 flex-1 items-center gap-2 rounded-full px-3",
+							"order-3 flex h-10 w-full items-center gap-2 rounded-full px-3 sm:order-none sm:min-w-0 sm:flex-1",
 							"border border-white/10 bg-white/5",
 							"text-text-secondary",
 						)}
@@ -200,7 +201,7 @@ export function PlayerEpisodeSelector({
 						aria-label={t(translation.Player.CloseEpisodes)}
 						onClick={() => setOpen(false)}
 						className={clsx(
-							"grid size-10 shrink-0 place-items-center rounded-lg",
+							"ml-auto grid size-10 shrink-0 place-items-center rounded-lg sm:ml-0",
 							"border border-white/10 bg-white/8",
 							"text-white",
 							"transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-white",
@@ -210,7 +211,12 @@ export function PlayerEpisodeSelector({
 					</button>
 				</div>
 
-				<div aria-busy={loading} className={clsx("w-full px-3 pt-6 pb-8 sm:px-4 sm:pt-8")}>
+				<div
+					aria-busy={loading}
+					className={clsx(
+						"w-full px-3 pt-5 pb-[max(2rem,env(safe-area-inset-bottom))] sm:px-4 sm:pt-8 sm:pb-8",
+					)}
+				>
 					<header className={clsx("mb-5 text-center")}>
 						<h2 className={clsx("text-2xl font-black text-white")}>
 							{t(translation.Common.Season, { number: selectedSeason })}
@@ -221,7 +227,12 @@ export function PlayerEpisodeSelector({
 						</p>
 					</header>
 
-					<div className={clsx("space-y-3 transition-opacity", loading && "opacity-45")}>
+					<div
+						className={clsx(
+							"grid grid-cols-2 gap-2 transition-opacity sm:grid-cols-1 sm:gap-3",
+							loading && "opacity-45",
+						)}
+					>
 						{filteredEpisodes.map((item) => {
 							const selected = selectedSeason === currentSeason && item.episode_number === currentEpisode;
 							const still = tmdbImage.still(item.still_path ?? undefined, "w780");
@@ -235,7 +246,7 @@ export function PlayerEpisodeSelector({
 									className={clsx(
 										"group relative block aspect-video w-full overflow-hidden rounded-lg text-left",
 										"bg-background-secondary",
-										selected ? "ring-2 ring-white" : "ring-1 ring-white/8",
+										selected ? "ring-2 ring-brand-light" : "ring-1 ring-white/8",
 										"transition-transform duration-300 hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
 									)}
 								>
@@ -244,7 +255,7 @@ export function PlayerEpisodeSelector({
 											src={still}
 											alt=""
 											fill
-											sizes="(max-width: 448px) calc(100vw - 2rem), 26rem"
+											sizes="(max-width: 639px) calc(50vw - 1rem), 26rem"
 											className={clsx(
 												"object-cover",
 												"transition-transform duration-500 group-hover:scale-[1.025]",
@@ -257,12 +268,12 @@ export function PlayerEpisodeSelector({
 											"bg-gradient-to-t from-black via-black/25 to-transparent",
 										)}
 									/>
-									<span className={clsx("absolute right-0 bottom-0 left-0 block p-3 sm:p-4")}>
+									<span className={clsx("absolute right-0 bottom-0 left-0 block p-2 sm:p-4")}>
 										<span className={clsx("flex flex-wrap items-center gap-2")}>
 											{selected && (
 												<span
 													className={clsx(
-														"rounded-md bg-brand-primary px-2 py-1",
+														"hidden rounded-md bg-brand-primary px-2 py-1 sm:inline-block",
 														"text-[10px] font-black tracking-wide text-white uppercase sm:text-xs",
 													)}
 												>
@@ -271,14 +282,14 @@ export function PlayerEpisodeSelector({
 											)}
 											<strong
 												className={clsx(
-													"line-clamp-2 min-w-0 flex-1 text-sm font-black text-white sm:text-base",
+													"line-clamp-2 min-w-0 flex-1 text-xs leading-4 font-black text-white sm:text-base",
 												)}
 											>
 												{item.episode_number}. {item.name}
 											</strong>
 										</span>
 										{item.runtime && (
-											<span className={clsx("mt-1 block text-sm font-semibold text-text-secondary")}>
+											<span className={clsx("mt-1 hidden text-sm font-semibold text-text-secondary sm:block")}>
 												{t(translation.Common.Minutes, { count: item.runtime })}
 											</span>
 										)}

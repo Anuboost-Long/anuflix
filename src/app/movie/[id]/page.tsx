@@ -14,9 +14,10 @@ export async function generateMetadata({
 }: Readonly<{ params: Promise<{ id: string }> }>): Promise<Metadata> {
 	try {
 		const { media } = await getMediaDetails("movie", Number((await params).id));
+		const year = media?.year ? ` (${media.year})` : "";
 		return media
 			? {
-					title: `${media.title}${media.year ? ` (${media.year})` : ""} — Anuflix`,
+					title: `${media.title}${year} — Anuflix`,
 					description: media.overview,
 				}
 			: {};

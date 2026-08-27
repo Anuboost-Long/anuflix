@@ -46,6 +46,10 @@ export function ContinueWatching() {
 					const image =
 						tmdbImage.backdrop(item.media.backdropPath) ?? tmdbImage.poster(item.media.posterPath);
 					const href = watchPath(item.media, item.season, item.episode);
+					const detail =
+						item.media.mediaType === "anime" && item.media.animeFormat !== "movie"
+							? t(translation.Common.Episode, { number: item.episode })
+							: t(translation.Catalog.Watched, { count: Math.round(item.percentage) });
 					return (
 						<div
 							key={`${item.media.mediaType}-${item.media.id}-${item.season}-${item.episode}`}
@@ -87,9 +91,7 @@ export function ContinueWatching() {
 								<span className="mt-1 block text-xs text-text-muted">
 									{item.media.mediaType === "tv"
 										? `${t(translation.Common.Season, { number: item.season })} · ${t(translation.Common.Episode, { number: item.episode })}`
-										: item.media.mediaType === "anime" && item.media.animeFormat !== "movie"
-											? t(translation.Common.Episode, { number: item.episode })
-											: t(translation.Catalog.Watched, { count: Math.round(item.percentage) })}
+										: detail}
 								</span>
 							</Link>
 							<Link

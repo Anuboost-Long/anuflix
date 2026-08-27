@@ -51,7 +51,7 @@ function HeaderLink({
 				active && "text-brand-light",
 			)}
 		>
-			<Icon name={icon} className="size-[18px]" />
+			<Icon name={icon} className="size-4.5" />
 			<span>{label}</span>
 		</Link>
 	);
@@ -166,14 +166,14 @@ export function Header() {
 								(browseActive || browseOpen) && "text-brand-light",
 							)}
 						>
-							<Icon name="film" className="size-[18px]" />
+							<Icon name="film" className="size-4.5" />
 							<span>{t(translation.Navigation.Browse)}</span>
 						</button>
 						{browseOpen ? (
 							<div
 								id="browse-menu"
 								className={clsx(
-									"absolute top-[calc(100%+.5rem)] left-1/2 w-[22rem] -translate-x-1/2 overflow-hidden rounded-xl",
+									"absolute top-[calc(100%+.5rem)] left-1/2 w-88 -translate-x-1/2 overflow-hidden rounded-xl",
 									"bg-background-secondary/98 backdrop-blur-xl",
 									"border border-border",
 								)}
@@ -232,7 +232,7 @@ export function Header() {
 										)}
 									>
 										<span className="grid size-9 place-items-center rounded-md border border-border-strong bg-background text-brand-light">
-											<Icon name="compass" className="size-[18px]" />
+											<Icon name="compass" className="size-4.5" />
 										</span>
 										<span>
 											<strong className="block font-medium text-text-primary">
@@ -261,7 +261,7 @@ export function Header() {
 													pathname === href && "text-brand-light",
 												)}
 											>
-												<Icon name={icon} className="size-[18px]" />
+												<Icon name={icon} className="size-4.5" />
 												<span>{t(label)}</span>
 											</Link>
 										))}

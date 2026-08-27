@@ -21,8 +21,8 @@ export default async function WatchEpisodePage({
 		getMediaDetails("tv", id),
 		getSeason(id, seasonNumber),
 	]);
-	const episode = season.episodes.find((item) => item.episode_number === episodeNumber);
-	if (!media || !episode) notFound();
+	const hasEpisode = season.episodes.some((item) => item.episode_number === episodeNumber);
+	if (!media || !hasEpisode) notFound();
 
 	return (
 		<div className={clsx("relative h-dvh w-full overflow-hidden bg-player")}>

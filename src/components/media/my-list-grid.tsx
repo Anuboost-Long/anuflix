@@ -26,7 +26,7 @@ export function MyListGrid() {
 		return (
 			<div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
 				{Array.from({ length: 6 }, (_, index) => (
-					<span key={index} className="aspect-[2/3] animate-pulse rounded-lg bg-surface" />
+					<span key={index} className="aspect-2/3 animate-pulse rounded-lg bg-surface" />
 				))}
 			</div>
 		);

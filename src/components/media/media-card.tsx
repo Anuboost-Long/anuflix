@@ -9,6 +9,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
+const mediaTypeLabels = {
+	anime: translation.Common.Anime,
+	movie: translation.Common.Film,
+	tv: translation.Navigation.Tv,
+};
+
 export function MediaCard({
 	media,
 	priority = false,
@@ -101,13 +107,7 @@ export function MediaCard({
 							<span className={clsx("text-brand-light")}>
 								★ {media.voteAverage ? media.voteAverage.toFixed(1) : "NR"}
 							</span>
-							<span>
-								{media.mediaType === "anime"
-									? t(translation.Common.Anime)
-									: media.mediaType === "movie"
-										? t(translation.Common.Film)
-										: t(translation.Navigation.Tv)}
-							</span>
+							<span>{t(mediaTypeLabels[media.mediaType])}</span>
 						</span>
 					</>
 				) : null}

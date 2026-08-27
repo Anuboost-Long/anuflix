@@ -90,7 +90,6 @@ export function MediaRow({
 					gutter && "px-[clamp(1.25rem,4vw,4.5rem)]",
 					priority && "scroll-smooth",
 				)}
-				tabIndex={0}
 			>
 				{items.slice(0, 20).map((media, index) => (
 					<div

@@ -117,6 +117,7 @@ export default async function DiscoverPage({
 					/>
 				</div>
 				<button
+					type="submit"
 					className={clsx(
 						"h-11 rounded-lg bg-brand-primary px-5 text-sm font-semibold text-white",
 						"transition-colors hover:bg-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-light",

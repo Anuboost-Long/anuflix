@@ -35,10 +35,10 @@ export function SearchDialog({ open, onClose }: Readonly<{ open: boolean; onClos
 				setVisible(false);
 			}
 		}, 0);
-		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-		const detach = open
+		const detachDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 			? 0
-			: window.setTimeout(() => setMounted(false), reducedMotion ? 0 : TRANSITION_MS);
+			: TRANSITION_MS;
+		const detach = open ? 0 : window.setTimeout(() => setMounted(false), detachDelay);
 
 		return () => {
 			window.clearTimeout(update);

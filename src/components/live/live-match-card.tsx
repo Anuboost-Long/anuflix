@@ -31,7 +31,7 @@ export function LiveMatchCard({ match, live }: Readonly<{ match: LiveMatch; live
 						alt=""
 						fill
 						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-						className="object-cover transition-transform duration-[550ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06]"
+						className="object-cover transition-transform duration-550 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06]"
 					/>
 				) : (
 					<span className="absolute inset-0 flex items-center justify-center gap-5 bg-[radial-gradient(circle_at_50%_35%,#17233a,#08101f_72%)]">

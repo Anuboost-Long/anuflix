@@ -139,13 +139,14 @@ export function Player({
 
 			if (!immediate && now - lastSaved.current < 7000) return;
 			lastSaved.current = now;
+			const played = duration > 0 ? (currentTime / duration) * 100 : 0;
 			progressStorage.save({
 				media,
 				season: eventSeason,
 				episode: eventEpisode,
 				currentTime,
 				duration,
-				percentage: playerEvent === "ended" ? 100 : duration > 0 ? (currentTime / duration) * 100 : 0,
+				percentage: playerEvent === "ended" ? 100 : played,
 				updatedAt: now,
 			});
 		}
@@ -183,22 +184,22 @@ export function Player({
 				key={`${media.mediaType}-${media.id}-${season ?? 0}-${episode ?? 0}`}
 				src={playerUrl}
 				title={t(translation.Player.WatchTitle, { title: media.title })}
-				allow="autoplay; picture-in-picture; encrypted-media"
+				allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+				allowFullScreen
 				onLoad={(event) => event.currentTarget.contentWindow?.focus()}
 				className={clsx("size-full border-0")}
 			/>
 			{showFullscreenHint && media.mediaType === "tv" && (
-				<div
+				<output
 					id="fullscreen-hint"
-					role="status"
 					className={clsx(
-						"absolute right-[max(1rem,env(safe-area-inset-right))] bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.5rem)] z-30 max-w-60 rounded-lg px-3 py-2.5",
+						"absolute right-[max(1rem,env(safe-area-inset-right))] bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.5rem)] z-30 hidden max-w-60 rounded-lg px-3 py-2.5 sm:block",
 						"border border-white/15 bg-black/75 backdrop-blur-md",
 						"text-xs leading-5 text-white",
 					)}
 				>
 					{t(translation.Player.FullscreenHint)}
-				</div>
+				</output>
 			)}
 			<button
 				type="button"
@@ -208,7 +209,7 @@ export function Player({
 				aria-describedby={showFullscreenHint ? "fullscreen-hint" : undefined}
 				onClick={toggleFullscreen}
 				className={clsx(
-					"absolute right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 grid size-11 place-items-center rounded-full",
+					"absolute right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 hidden size-11 place-items-center rounded-full sm:grid",
 					"bg-black/50 backdrop-blur-sm",
 					"text-white",
 					"transition-colors hover:bg-black/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",

@@ -30,7 +30,10 @@ export default async function SearchPage({
 					placeholder={t(translation.Search.Placeholder)}
 					className="h-full min-w-0 flex-1 bg-transparent text-base text-text-primary outline-none placeholder:text-text-subtle"
 				/>
-				<button className="h-9 rounded-lg bg-brand-primary px-4 text-sm font-semibold text-white hover:bg-brand-bright">
+				<button
+					type="submit"
+					className="h-9 rounded-lg bg-brand-primary px-4 text-sm font-semibold text-white hover:bg-brand-bright"
+				>
 					{t(translation.SearchPage.Button)}
 				</button>
 			</form>
