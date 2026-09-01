@@ -10,6 +10,7 @@
 		"make-language": "node ./scripts/make-language.mjs"
 	},
 	"dependencies": {
+		"@vercel/analytics": "^2.0.1",
 		"axios": "^1.19.0",
 		"clsx": "^2.1.1",
 		"i18next": "^26.3.6",

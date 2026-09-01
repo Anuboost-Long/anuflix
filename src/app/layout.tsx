@@ -2,6 +2,7 @@ import { AppShell } from "@/components/navigation/app-shell";
 import { I18nProvider } from "@/components/shared/i18n-provider";
 import { translation } from "@/constants/translation";
 import { getServerLocale, getServerTranslation } from "@/i18n/server";
+import { Analytics } from "@vercel/analytics/next";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -33,6 +34,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 				<I18nProvider locale={locale}>
 					<AppShell>{children}</AppShell>
 				</I18nProvider>
+				<Analytics />
 			</body>
 		</html>
 	);
