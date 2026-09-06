@@ -34,7 +34,6 @@ export function LivePlayer({ title, streams }: Readonly<{ title: string; streams
 					title={t(translation.LivePage.WatchLive, { title })}
 					allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 					allowFullScreen
-					sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
 					referrerPolicy="no-referrer"
 					className="size-full border-0"
 				/>

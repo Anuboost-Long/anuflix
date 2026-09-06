@@ -186,7 +186,6 @@ export function Player({
 				title={t(translation.Player.WatchTitle, { title: media.title })}
 				allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
 				allowFullScreen
-				sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
 				onLoad={(event) => event.currentTarget.contentWindow?.focus()}
 				className={clsx("size-full border-0")}
 			/>
